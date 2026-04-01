@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400;500&family=Alex+Brush&family=Pinyon+Script&display=swap');
 
 :root {
-  /* Luxury Color Palette */
-  --color-bg: #FCFBF9; /* Warm off-white */
-  --color-bg-alt: #F0EEE9; /* Soft taupe */
-  --color-text-main: #2C3531; /* Deep olive/black */
-  --color-text-muted: #5A645D; /* Muted sage gray */
-  --color-accent: #BDA588; /* Champagne gold */
+  /* Ethiopian Orthodox Habesha Royal Palette */
+  --color-bg: #FDFBF7; /* Traditional cotton white */
+  --color-bg-alt: #F3EBE1; /* Warm gold-tinted cream */
+  --color-text-main: #3A0B14; /* Deep velvet Kaba Red / Mahogany */
+  --color-text-muted: #6E3D45; /* Muted burgundy */
+  --color-accent: #D4AF37; /* Rich traditional Gold */
   
   --font-serif: 'Cormorant Garamond', serif;
   --font-sans: 'Montserrat', sans-serif;
@@ -225,6 +225,68 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.95rem;
   color: var(--color-text-muted);
   margin-bottom: 1.5rem;
+}
+
+/* Gallery Styles */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+@media (min-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px; /* Slightly softer */
+  aspect-ratio: 4/5;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.6s ease;
+}
+
+.gallery-item:hover {
+  transform: translateY(-20px) scale(1.02);
+  box-shadow: 0 40px 60px rgba(0,0,0,0.25);
+  z-index: 10;
+}
+
+.gallery-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(189, 165, 136, 0.15); /* Vintage warm gold wash */
+  z-index: 1;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+}
+
+.gallery-item:hover .gallery-overlay {
+  opacity: 0; /* Wash clears out when you hover over them, revealing the raw image */
+}
+
+/* Offset middle items for a chic masonry-like flow */
+@media (min-width: 768px) {
+  .item-1, .item-4 {
+    margin-top: 60px;
+  }
+}
+
+.gallery-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.gallery-item:hover .gallery-image {
+  transform: scale(1.15); /* Even stronger zoom on hover */
 }
 
 /* Countdown */
@@ -460,7 +522,7 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background: #2a3430; /* Very dark rich green/charcoal inside for luxury contrast */
+  background: #24050A; /* Extremely dark burgundy inside for luxury contrast */
   border-radius: 4px;
   box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
   z-index: 1;
@@ -486,7 +548,7 @@ h1, h2, h3, h4, h5, h6 {
 .fancy-card-border {
   width: 100%;
   height: 100%;
-  border: 1px solid rgba(189, 165, 136, 0.5); /* Delicate gold outline */
+  border: 1px solid rgba(212, 175, 55, 0.6); /* Gold outline */
   padding: 2px;
   position: relative;
   display: flex;
@@ -499,7 +561,7 @@ h1, h2, h3, h4, h5, h6 {
   content: '';
   position: absolute;
   top: 4px; left: 4px; right: 4px; bottom: 4px;
-  border: 1px dashed rgba(189, 165, 136, 0.4);
+  border: 1px dashed rgba(212, 175, 55, 0.5);
   pointer-events: none;
 }
 
@@ -508,11 +570,11 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   bottom: 0; left: 0;
   width: 100%; height: 100%;
-  background: #ebd8c3; /* Elegant beige/ivory parchment */
-  background-image: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(0,0,0,0.02) 100%);
+  background: #3A0B14; /* Deep Kaba Velvet Red */
+  background-image: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(0,0,0,0.2) 100%);
   clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0, 50% 64%);
   z-index: 3;
-  filter: drop-shadow(0 -5px 15px rgba(0,0,0,0.15));
+  filter: drop-shadow(0 -5px 15px rgba(0,0,0,0.3));
 }
 
 /* Top Flap */
@@ -520,12 +582,12 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 85%;
-  background: #fdfbf7; /* Slightly brighter for the top flap */
-  background-image: linear-gradient(180deg, #fdfbf7 0%, #ebd8c3 100%);
+  background: #4A0E1A; /* Slightly brighter red for top flap */
+  background-image: linear-gradient(180deg, #4A0E1A 0%, #2A060E 100%);
   clip-path: polygon(0 0, 100% 0, 50% 100%);
   z-index: 4;
   transform-origin: top;
-  filter: drop-shadow(0 15px 15px rgba(0,0,0,0.25));
+  filter: drop-shadow(0 15px 15px rgba(0,0,0,0.4));
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
 }
@@ -537,12 +599,12 @@ h1, h2, h3, h4, h5, h6 {
   width: 85px; height: 85px;
   margin-top: calc(-40px + 12%); /* adjust to flap tip precisely */
   margin-left: -42.5px;
-  background: radial-gradient(circle at 30% 30%, #ff4d4d 0%, #cc0000 20%, #8b0000 60%, #4a0000 100%);
+  background: radial-gradient(circle at 30% 30%, #FFDF73 0%, #D4AF37 20%, #B8860B 60%, #8B6508 100%); /* Solid Gold Seal! */
   border-radius: 48% 52% 47% 53% / 54% 48% 52% 46%; /* Slightly organic, imperfect circle for realism */
   box-shadow: 
     0 10px 20px rgba(0,0,0,0.7),
-    inset 0 0 15px rgba(50,0,0,0.9),
-    inset 2px 2px 5px rgba(255,100,100,0.7),
+    inset 0 0 15px rgba(80,60,0,0.9),
+    inset 2px 2px 5px rgba(255,255,150,0.7),
     inset -2px -2px 8px rgba(0,0,0,0.8);
   z-index: 5;
   cursor: pointer;
@@ -550,25 +612,25 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #d4af37; /* Metallic gold text */
+  color: #3A0B14; /* Deep red text carved into gold */
   font-family: var(--font-serif);
   font-size: 1.6rem;
   font-style: italic;
   font-weight: 600;
   letter-spacing: 1px;
-  border: 1px solid #3d0000;
-  text-shadow: -1px -1px 2px rgba(0,0,0,0.9), 1px 1px 1px rgba(255,255,255,0.3);
+  border: 1px solid #5C4000;
+  text-shadow: 1px 1px 1px rgba(255,255,255,0.4), -1px -1px 1px rgba(0,0,0,0.2);
   transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Gold inner ring on the wax */
+/* Red/Dark inner ring on the wax */
 .wax-seal::before {
   content: '';
   position: absolute;
   top: 14px; left: 14px; right: 14px; bottom: 14px;
-  border: 1.5px solid rgba(212, 175, 55, 0.4); /* gold inset ring */
+  border: 1.5px solid rgba(58, 11, 20, 0.6); /* deeply embossed ring */
   border-radius: 50%;
-  box-shadow: inset 0 0 12px rgba(0,0,0,0.4), 0 0 4px rgba(0,0,0,0.3);
+  box-shadow: inset 0 0 12px rgba(0,0,0,0.2), 0 0 4px rgba(0,0,0,0.1);
   pointer-events: none;
 }
 

@@ -3,6 +3,18 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { MapPin, CalendarHeart, Clock, GlassWater } from 'lucide-react';
 import './index.css';
 
+// Importing local images from src/assets/
+import heroImg from './assets/hero.png';
+import storyImg from './assets/1.jpg';
+import gal1 from './assets/326ed2eaf73709e853d6f9807ba8b9fc.jpg';
+import gal2 from './assets/36c3412900dc3b6da9a861b937dba285.jpg';
+import gal3 from './assets/3b1b2aad08cbd20873671ecc648220f7.jpg';
+import gal4 from './assets/67c6f17f4b05bda8c5ca5ff4dad93460.jpg';
+import gal5 from './assets/e086dbcc504ffc7c6d6373cbd701e8d8.jpg';
+import gal6 from './assets/download.jpg';
+import gal7 from './assets/images.jfif';
+import gal8 from './assets/images (4).jfif';
+
 // Components
 const FadeIn = ({ children, delay = 0 }) => (
   <motion.div
@@ -157,8 +169,8 @@ function App() {
         <section className="hero">
           <motion.img 
             style={{ y: heroY }}
-            src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
-            alt="Wedding Background" 
+            src={heroImg} 
+            alt="Majestic Ethiopian Orthodox Church" 
             className="hero-bg"
           />
           <div className="hero-overlay"></div>
@@ -183,8 +195,8 @@ function App() {
           <div className="story-grid">
             <FadeIn>
               <img 
-                src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                alt="Couple holding hands" 
+                src={storyImg} 
+                alt="Couple" 
                 className="story-image"
               />
             </FadeIn>
@@ -202,6 +214,45 @@ function App() {
                 <h3 className="script-font" style={{ fontSize: '3rem', marginTop: '2rem', color: 'var(--color-text-main)' }}>K & B</h3>
               </FadeIn>
             </div>
+          </div>
+        </section>
+
+        {/* --- GALLERY SECTION --- */}
+        <section className="section container">
+          <FadeIn>
+            <div className="text-center">
+              <div className="uppercase-mono text-accent">Captured Moments</div>
+              <h2 style={{ fontSize: '3.5rem', margin: '1rem 0' }}>Our Gallery</h2>
+            </div>
+          </FadeIn>
+          
+          <div className="gallery-grid">
+            {[
+              gal1,
+              gal2,
+              gal3,
+              gal4,
+              gal5,
+              gal6,
+              gal7,
+              gal8
+            ].map((src, index) => {
+              const isEven = index % 2 === 0;
+              return (
+              <motion.div 
+                key={index} 
+                className={`item-${index}`}
+                initial={{ opacity: 0, scale: 0.8, y: 100, rotate: isEven ? -6 : 6 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0, rotate: 0 }}
+                viewport={{ once: true, margin: "-20px" }}
+                transition={{ duration: 1.2, delay: (index % 3) * 0.15, type: "spring", bounce: 0.35 }}
+              >
+                <div className="gallery-item">
+                  <div className="gallery-overlay"></div>
+                  <img src={src} alt={`Wedding Moment ${index + 1}`} className="gallery-image" />
+                </div>
+              </motion.div>
+            )})}
           </div>
         </section>
 
@@ -233,15 +284,15 @@ function App() {
                 <h3 className="event-title">The Ceremony</h3>
                 <div className="event-time">
                   <Clock size={16} className="inline mr-2" style={{ display: 'inline', verticalAlign: 'text-bottom', marginRight: '5px' }} /> 
-                  4:00 PM
+                  10:00 AM
                 </div>
                 <div className="event-address">
-                  <strong>St. Jude's Cathedral</strong><br />
-                  123 Heritage Ave.<br />
-                  Florence, Italy
+                  <strong>Bole Medhane Alem Cathedral</strong><br />
+                  Cameroon Street<br />
+                  Addis Ababa, Ethiopia
                 </div>
                 <a 
-                  href="https://www.google.com/maps/search/?api=1&query=St.+Jude's+Cathedral,+Florence,+Italy" 
+                  href="https://www.google.com/maps/search/?api=1&query=Bole+Medhane+Alem+Cathedral,+Addis+Ababa" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="btn btn-outline" 
@@ -259,15 +310,15 @@ function App() {
                 <h3 className="event-title">The Reception</h3>
                 <div className="event-time">
                   <Clock size={16} className="inline mr-2" style={{ display: 'inline', verticalAlign: 'text-bottom', marginRight: '5px' }} /> 
-                  6:30 PM
+                  6:00 PM
                 </div>
                 <div className="event-address">
-                  <strong>Villa del Paradiso</strong><br />
-                  456 Sunset Boulevard<br />
-                  Florence, Italy
+                  <strong>Ethiopian Skylight Hotel</strong><br />
+                  Bole Road<br />
+                  Addis Ababa, Ethiopia
                 </div>
                 <a 
-                  href="https://www.google.com/maps/search/?api=1&query=Villa+del+Paradiso,+Florence,+Italy" 
+                  href="https://www.google.com/maps/search/?api=1&query=Ethiopian+Skylight+Hotel,+Addis+Ababa" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="btn btn-outline" 
