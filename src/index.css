@@ -542,6 +542,22 @@ h6 {
   transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
+@media (max-width: 768px) {
+  .envelope-wrapper {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    aspect-ratio: auto;
+  }
+  .envelope, 
+  .envelope-back, 
+  .envelope-flap {
+    border-radius: 0 !important;
+  }
+}
+
 .envelope-wrapper:hover {
   transform: perspective(1000px) rotateX(2deg) scale(1.02);
 }
