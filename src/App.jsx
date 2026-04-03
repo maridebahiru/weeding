@@ -66,73 +66,100 @@ const Countdown = ({ targetDate }) => {
 
 function EnvelopeScreen({ onOpen }) {
   const [isOpening, setIsOpening] = useState(false);
+  const [isCracked, setIsCracked] = useState(false);
 
   const handleSealClick = () => {
-    setIsOpening(true);
-    // Directly and rapidly animate into the home page
+    setIsCracked(true);
+    
+    // Slow camera push in and flap opening sequence
+    setTimeout(() => {
+      setIsOpening(true);
+    }, 800); // Small pause after cracking
+
+    // Very slow cinematic reveal
     setTimeout(() => {
       onOpen();
-    }, 500); // Much faster transition directly into the site
+    }, 6500); 
   };
 
   return (
     <motion.div 
       className="envelope-overlay"
       initial={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 1.4, filter: 'blur(20px)', transition: { duration: 1, ease: "easeInOut" } }}
+      animate={isOpening ? { scale: 1.15 } : (isCracked ? { scale: 1.05 } : { scale: 1 })}
+      transition={{ duration: 6, ease: "easeOut" }}
+      exit={{ opacity: 0, scale: 1.5, filter: 'blur(20px)', transition: { duration: 1.5, ease: "easeInOut" } }}
     >
       <div className="envelope-wrapper">
         <div className="envelope">
+          {/* Soft Natural Light Overlay */}
+          <div className="envelope-light"></div>
+          
           {/* Back of envelope */}
-          <div className="envelope-back"></div>
-
-          {/* The Invite Card inside */}
           <motion.div 
-            className="envelope-card-fancy"
-            initial={{ y: 0 }}
-            animate={isOpening ? { y: -240, zIndex: 6 } : { y: 0, zIndex: 2 }}
-            transition={{ duration: 1.2, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-          >
-            <div className="fancy-card-border">
-              <div className="uppercase-mono" style={{ color: 'var(--color-accent)', fontSize: '0.75rem', marginBottom: '1.5rem', letterSpacing: '0.15rem' }}>
-                The Wedding Of
-              </div>
-              <div className="script-font" style={{ fontSize: '3.2rem', color: 'var(--color-text-main)', lineHeight: '1.2', margin: '0 1rem', textAlign: 'center' }}>
-                Kalkidan<br />& Beteab
-              </div>
-              <div style={{ marginTop: '1.5rem', borderTop: '1px solid rgba(189, 165, 136, 0.5)', width: '40px', paddingTop: '1rem' }} />
-              <div className="uppercase-mono" style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', letterSpacing: '0.1rem' }}>
-                October 15, 2026
-              </div>
-            </div>
-          </motion.div>
+            className="envelope-back"
+            animate={isOpening ? { filter: 'blur(4px)' } : { filter: 'blur(0px)' }}
+            transition={{ duration: 2, delay: 1 }}
+          ></motion.div>
+
+
 
           {/* Bottom pocket of envelope */}
-          <div className="envelope-pocket"></div>
+          <motion.div 
+            className="envelope-pocket"
+            animate={isOpening ? { filter: 'blur(3px)' } : { filter: 'blur(0px)' }}
+            transition={{ duration: 2, delay: 1.5 }}
+          ></motion.div>
           
           {/* Top cover flap */}
           <motion.div 
             className="envelope-flap"
             initial={{ rotateX: 0, zIndex: 4 }}
-            animate={isOpening ? { rotateX: 180, zIndex: 1 } : { rotateX: 0, zIndex: 4 }}
-            transition={{ duration: 0.5, ease: "easeIn" }}
+            animate={isOpening ? { rotateX: 180, zIndex: 1, filter: 'blur(3px)' } : { rotateX: 0, zIndex: 4, filter: 'blur(0px)' }}
+            transition={{ duration: 2.2, ease: "easeInOut" }}
             style={{ transformOrigin: 'top' }}
           />
 
           {/* Red Wax Seal */}
           <AnimatePresence>
-            {!isOpening && (
+            {!isCracked ? (
               <motion.div 
+                key="seal-intact"
                 className="wax-seal"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                exit={{ scale: 0, opacity: 0, transition: { duration: 0.3 } }}
+                exit={{ opacity: 0, transition: { duration: 0 } }}
                 onClick={handleSealClick}
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.05, filter: 'brightness(1.1)' }}
                 whileTap={{ scale: 0.95 }}
               >
                 K&B
               </motion.div>
+            ) : (
+              <>
+                {/* Left cracked half */}
+                <motion.div
+                  key="seal-crack-left"
+                  className="wax-seal"
+                  initial={{ clipPath: 'polygon(0 0, 50% 0, 40% 30%, 60% 70%, 50% 100%, 0 100%)' }}
+                  animate={{ x: -40, y: 40, opacity: 0, rotate: -25, scale: 0.9 }}
+                  transition={{ duration: 1.5, ease: "easeIn" }}
+                  style={{ pointerEvents: 'none', filter: 'drop-shadow(-5px 5px 5px rgba(0,0,0,0.5))' }}
+                >
+                  K&B
+                </motion.div>
+                {/* Right cracked half */}
+                <motion.div
+                  key="seal-crack-right"
+                  className="wax-seal"
+                  initial={{ clipPath: 'polygon(50% 0, 100% 0, 100% 100%, 50% 100%, 60% 70%, 40% 30%)' }}
+                  animate={{ x: 40, y: 40, opacity: 0, rotate: 25, scale: 0.9 }}
+                  transition={{ duration: 1.5, ease: "easeIn" }}
+                  style={{ pointerEvents: 'none', filter: 'drop-shadow(5px 5px 5px rgba(0,0,0,0.5))' }}
+                >
+                  K&B
+                </motion.div>
+              </>
             )}
           </AnimatePresence>
         </div>
