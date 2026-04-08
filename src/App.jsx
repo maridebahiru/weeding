@@ -73,11 +73,12 @@ const Countdown = ({ targetDate }) => {
   );
 };
 
-function EnvelopeScreen({ onOpen }) {
+function EnvelopeScreen({ onOpen, onStart }) {
   const [isOpening, setIsOpening] = useState(false);
 
   const handleOpenClick = () => {
     setIsOpening(true);
+    if (onStart) onStart();
     
     // Smooth cinematic transition timing
     setTimeout(() => {
@@ -137,6 +138,9 @@ function App() {
   
   const handleOpen = () => {
     setShowInvite(true);
+  };
+
+  const handleStart = () => {
     setStartMusic(true);
   };
 
@@ -152,7 +156,7 @@ function App() {
   return (
     <>
       <AnimatePresence>
-        {!showInvite && <EnvelopeScreen onOpen={handleOpen} />}
+        {!showInvite && <EnvelopeScreen onOpen={handleOpen} onStart={handleStart} />}
       </AnimatePresence>
 
       {/* Background Music - Hidden YouTube Player */}
@@ -202,6 +206,9 @@ function App() {
           <div className="hero-overlay"></div>
           
           <motion.div style={{ opacity: heroOpacity }} className="hero-content">
+            <FadeIn delay={0.1}>
+              <img src={sealImg} alt="Seal Logo" className="hero-logo" style={{ width: '80px', height: '80px', marginBottom: '1.5rem', filter: 'drop-shadow(0 4px 10px rgba(0,0,0,0.3))' }} />
+            </FadeIn>
             <FadeIn delay={0.2}>
               <div className="uppercase-mono" style={{ color: 'white', opacity: 0.9, marginBottom: '0.5rem' }}>October 15, 2026</div>
             </FadeIn>
@@ -364,7 +371,8 @@ function App() {
         {/* --- FOOTER --- */}
         <footer className="footer">
           <FadeIn>
-            <div className="footer-initials">K & B</div>
+            <img src={sealImg} alt="Seal Logo" style={{ width: '60px', height: '60px', marginBottom: '1rem', filter: 'brightness(0.9)' }} />
+            <div className="footer-names" style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', color: 'var(--color-primary)' }}>Kalkidan & Beteab</div>
             <div className="uppercase-mono" style={{ opacity: 0.7, margin: '1.5rem 0' }}>We can't wait to celebrate with you</div>
             <div style={{ fontSize: '0.8rem', opacity: 0.5 }}>
               © {new Date().getFullYear()} Kalkidan & Beteab. All Rights Reserved.
