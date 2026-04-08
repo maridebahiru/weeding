@@ -1,19 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400;500&family=Alex+Brush&family=Pinyon+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&family=Great+Vibes&display=swap');
 
 :root {
-
+  /* Original Color Palette Reverted */
+  --color-primary: #3A0B14;
+  --color-primary-dark: #2A060E;
+  --color-accent: #D4AF37;
   --color-bg: #FDFBF7;
   --color-bg-alt: #F3EBE1;
   --color-text-main: #3A0B14;
-  --color-text-muted: #6E3D45;
-  --color-accent: #D4AF37;
+  --color-text-body: #2B2622;
+  --color-text-muted: rgba(58, 11, 20, 0.7);
 
+  /* Keep Heritage Theme Fonts */
   --font-serif: 'Cormorant Garamond', serif;
   --font-sans: 'Montserrat', sans-serif;
-  --font-script: 'Pinyon Script', cursive;
+  --font-script: 'Great Vibes', cursive;
 
-  --spacing-section: 6rem;
-  --container-width: 1200px;
+  --spacing-section: 8rem;
+  --container-width: 1100px;
 }
 
 * {
@@ -28,10 +32,11 @@ html {
 
 body {
   background-color: var(--color-bg);
-  color: var(--color-text-main);
+  background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+  color: var(--color-text-body);
   font-family: var(--font-sans);
   font-weight: 300;
-  line-height: 1.6;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -84,9 +89,9 @@ h6 {
 .uppercase-mono {
   font-family: var(--font-sans);
   text-transform: uppercase;
-  letter-spacing: 0.2rem;
-  font-size: 0.85rem;
-  font-weight: 400;
+  letter-spacing: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 500;
 }
 
 /* Specific Section Styles */
@@ -94,13 +99,13 @@ h6 {
 /* Hero */
 .hero {
   height: 100vh;
-  min-height: 600px;
+  min-height: 700px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
-  color: var(--color-bg);
+  color: white;
 }
 
 .hero-bg {
@@ -111,8 +116,7 @@ h6 {
   height: 100%;
   object-fit: cover;
   z-index: -2;
-  transform: scale(1.05);
-  /* Slight scale for parallax effect */
+  transform: scale(1.1);
 }
 
 .hero-overlay {
@@ -121,7 +125,7 @@ h6 {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(44, 53, 49, 0.2) 0%, rgba(44, 53, 49, 0.7) 100%);
+  background: linear-gradient(to bottom, rgba(44, 53, 49, 0.1) 0%, rgba(44, 53, 49, 0.4) 100%);
   z-index: -1;
 }
 
@@ -132,61 +136,45 @@ h6 {
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
-}
-
-.hero-date {
-  font-family: var(--font-sans);
-  letter-spacing: 0.4rem;
-  text-transform: uppercase;
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
+  padding: 0 1.5rem;
 }
 
 .hero-names {
-  font-size: 3.5rem;
+  font-size: 4rem;
   font-family: var(--font-serif);
   font-weight: 300;
-  line-height: 1.1;
+  line-height: 1;
   margin-bottom: 0.5rem;
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 @media (min-width: 768px) {
   .hero-names {
-    font-size: 5.5rem;
+    font-size: 6.5rem;
   }
 }
 
 .hero-names span {
   font-family: var(--font-script);
   color: var(--color-accent);
-  font-size: 1.2em;
-  padding: 0 0.5rem;
+  font-size: 0.8em;
+  padding: 0 1rem;
   display: inline-block;
-  transform: translateY(0.1em);
-}
-
-.hero-subtitle {
-  font-family: var(--font-serif);
-  font-size: 1.4rem;
-  font-style: italic;
-  font-weight: 300;
-  opacity: 0.9;
 }
 
 /* Story/Details */
 .story-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 3rem;
+  gap: 4rem;
   align-items: center;
-  margin-top: 4rem;
+  margin-top: 5rem;
 }
 
 @media (min-width: 768px) {
   .story-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 6rem;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 8rem;
   }
 }
 
@@ -216,35 +204,45 @@ h6 {
 
 .event-card {
   background: white;
-  padding: 3rem;
-  border: 1px solid rgba(189, 165, 136, 0.2);
-  border-radius: 4px;
+  padding: 3.5rem 2.5rem;
+  border: 1px solid rgba(58, 11, 20, 0.1);
+  border-radius: 0;
   text-align: center;
   flex: 1;
   max-width: 450px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.02);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(58, 11, 20, 0.08);
 }
 
 .event-icon {
   color: var(--color-accent);
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  opacity: 0.8;
 }
 
 .event-title {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+  color: var(--color-primary);
 }
 
 .event-time {
   font-weight: 500;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   color: var(--color-accent);
+  letter-spacing: 0.1rem;
 }
 
 .event-address {
-  font-size: 0.95rem;
-  color: var(--color-text-muted);
-  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  color: var(--color-text-body);
+  margin-bottom: 2.5rem;
+  line-height: 1.8;
 }
 
 /* Gallery Styles */
@@ -321,8 +319,9 @@ h6 {
 /* Countdown */
 .countdown-section {
   background-color: var(--color-bg-alt);
-  padding: 6rem 1.5rem;
+  padding: 8rem 1.5rem;
   text-align: center;
+  position: relative;
 }
 
 .countdown-container {
@@ -343,7 +342,13 @@ h6 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 80px;
+  justify-content: center;
+  min-width: 100px;
+  padding: 2rem 1rem;
+  background: white;
+  border-radius: 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(58, 11, 20, 0.05);
 }
 
 .countdown-number {
@@ -363,10 +368,12 @@ h6 {
 
 .countdown-label {
   font-family: var(--font-sans);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.15rem;
-  color: var(--color-text-muted);
+  letter-spacing: 0.25rem;
+  color: var(--color-primary);
+  opacity: 0.8;
+  font-weight: 500;
 }
 
 /* RSVP Form */
@@ -467,42 +474,49 @@ h6 {
 
 .btn {
   display: inline-block;
-  background: var(--color-text-main);
+  background: rgba(58, 11, 20, 0.85); /* Semi-transparent Burgundy */
+  backdrop-filter: blur(8px);
   color: white;
-  border: none;
-  padding: 1rem 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 3rem;
   font-family: var(--font-sans);
   text-transform: uppercase;
-  letter-spacing: 0.15rem;
-  font-size: 0.85rem;
+  letter-spacing: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.4s ease;
-  width: 100%;
-  margin-top: 1rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  width: auto;
+  border-radius: 100px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .btn:hover {
   background: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(212, 143, 88, 0.3);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .btn-outline {
-  background: transparent;
-  color: var(--color-text-main);
-  border: 1px solid var(--color-text-main);
-  width: auto;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  color: var(--color-primary);
+  border: 1px solid rgba(58, 11, 20, 0.2);
 }
 
 .btn-outline:hover {
-  background: var(--color-text-main);
+  background: var(--color-primary);
   color: white;
+  border-color: var(--color-primary);
 }
 
 /* Footer */
 .footer {
-  padding: 4rem 1.5rem;
+  padding: 6rem 1.5rem;
   text-align: center;
-  background: var(--color-text-main);
-  color: var(--color-bg);
+  background: var(--color-primary);
+  color: white;
 }
 
 .footer-initials {
@@ -581,37 +595,35 @@ h6 {
   left: 0;
   width: 100%;
   height: 100%;
-  background: #24050A;
-  /* Extremely dark burgundy inside for luxury contrast */
+  background: var(--color-bg-alt);
+  background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
   border-radius: 4px;
-  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.3);
   z-index: 1;
 }
 
 /* Fancy Card That Slides Out */
 .envelope-card-fancy {
   position: absolute;
-  width: 88%;
-  height: 95%;
+  width: 92%;
+  height: 96%;
   background: var(--color-bg);
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 2;
-  /* Below the pocket */
   border-radius: 4px;
   transform: translateY(0);
-  padding: 1rem;
+  padding: 2rem;
 }
 
 .fancy-card-border {
   width: 100%;
   height: 100%;
-  border: 1px solid rgba(212, 175, 55, 0.6);
-  /* Gold outline */
-  padding: 2px;
+  border: 1px solid rgba(58, 11, 20, 0.2);
+  padding: 4px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -650,85 +662,90 @@ h6 {
   left: 0;
   width: 100%;
   height: 100%;
-  background: #3A0B14;
-  /* Deep Kaba Velvet Red */
-  background-image: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%);
+  background: var(--color-primary);
+  background-image: 
+    linear-gradient(135deg, rgba(178, 201, 186, 0.1) 0%, rgba(0, 0, 0, 0.2) 100%),
+    url("https://www.transparenttextures.com/patterns/natural-paper.png");
   clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0, 50% 55%);
   z-index: 3;
-  filter: drop-shadow(0 -5px 15px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(0 -5px 15px rgba(0, 0, 0, 0.2));
+  transform: translateZ(5px);
 }
 
-/* Top Flap */
+/* Top Flap Container (unclipped) */
 .envelope-flap {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 60%;
-  background: #4A0E1A;
-  /* Slightly brighter red for top flap */
-  background-image: linear-gradient(180deg, #4A0E1A 0%, #2A060E 100%);
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
-  z-index: 4;
+  z-index: 10;
   transform-origin: top;
-  filter: drop-shadow(0 15px 15px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(0 15px 15px rgba(0, 0, 0, 0.3));
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
+  transform-style: preserve-3d;
 }
 
-/* Detailed Pure CSS Wax Seal */
-.wax-seal {
+.envelope-flap-bg {
   position: absolute;
-  top: 60%;
+  inset: 0;
+  background: var(--color-primary);
+  background-image: 
+    linear-gradient(180deg, var(--color-primary) 0%, #2A3620 100%),
+    url("https://www.transparenttextures.com/patterns/natural-paper.png");
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  z-index: 1;
+}
+
+.wax-seal-wrapper {
+  position: absolute;
+  bottom: 0;
   left: 50%;
-  width: 85px;
-  height: 85px;
-  margin-top: calc(-42.5px + 0%);
-  /* adjust to flap tip precisely */
-  margin-left: -42.5px;
-  background: radial-gradient(circle at 30% 30%, #FFDF73 0%, #D4AF37 20%, #B8860B 60%, #8B6508 100%);
-  /* Solid Gold Seal! */
-  border-radius: 48% 52% 47% 53% / 54% 48% 52% 46%;
-  /* Slightly organic, imperfect circle for realism */
-  box-shadow:
-    0 10px 20px rgba(0, 0, 0, 0.7),
-    inset 0 0 15px rgba(80, 60, 0, 0.9),
-    inset 2px 2px 5px rgba(255, 255, 150, 0.7),
-    inset -2px -2px 8px rgba(0, 0, 0, 0.8);
-  z-index: 5;
+  transform: translateX(-50%) translateY(50%) translateZ(10px);
+  z-index: 50;
+  pointer-events: none; /* Let parent handle click if needed, or set to auto if seal is clicked */
+}
+
+/* Wax Seal Style using Image Asset */
+.wax-seal-img {
+  width: 140px; /* Slightly larger for realism */
+  height: auto;
+  pointer-events: auto;
   cursor: pointer;
+  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.6));
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+  user-select: none;
+}
+
+.wax-seal-wrapper:hover .wax-seal-img {
+  transform: scale(1.05) rotate(2deg);
+  filter: brightness(1.1) drop-shadow(0 20px 40px rgba(0, 0, 0, 0.7));
+}
+
+.mute-btn {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 2000;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(58, 11, 20, 0.15);
+  color: var(--color-primary);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #3A0B14;
-  /* Deep red text carved into gold */
-  font-family: var(--font-serif);
-  font-size: 1.6rem;
-  font-style: italic;
-  font-weight: 600;
-  letter-spacing: 1px;
-  border: 1px solid #5C4000;
-  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.4), -1px -1px 1px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
-/* Red/Dark inner ring on the wax */
-.wax-seal::before {
-  content: '';
-  position: absolute;
-  top: 14px;
-  left: 14px;
-  right: 14px;
-  bottom: 14px;
-  border: 1.5px solid rgba(58, 11, 20, 0.6);
-  /* deeply embossed ring */
-  border-radius: 50%;
-  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.2), 0 0 4px rgba(0, 0, 0, 0.1);
-  pointer-events: none;
-}
-
-.wax-seal:hover {
-  filter: brightness(1.15) contrast(1.1);
-  transform: scale(1.05);
+.mute-btn:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.1) rotate(5deg);
+  border-color: var(--color-primary);
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { MapPin, CalendarHeart, Clock, GlassWater } from 'lucide-react';
+import { MapPin, CalendarHeart, Clock, GlassWater, Volume2, VolumeX } from 'lucide-react';
 import './index.css';
 
 // Importing local images from src/assets/
@@ -14,6 +14,7 @@ import gal5 from './assets/e086dbcc504ffc7c6d6373cbd701e8d8.jpg';
 import gal6 from './assets/download.jpg';
 import gal7 from './assets/images.jfif';
 import gal8 from './assets/images (4).jfif';
+import sealImg from './assets/wax-seal.png';
 
 // Components
 const FadeIn = ({ children, delay = 0 }) => (
@@ -21,10 +22,18 @@ const FadeIn = ({ children, delay = 0 }) => (
     initial={{ opacity: 0, y: 30 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: "-100px" }}
-    transition={{ duration: 1, delay, ease: [0.25, 0.1, 0.25, 1] }}
+    transition={{ duration: 1.5, delay, ease: [0.25, 0.1, 0.25, 1] }}
   >
     {children}
   </motion.div>
+);
+
+const SectionDivider = () => (
+  <div className="flex items-center justify-center gap-4 my-12 opacity-40" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', margin: '3rem 0', opacity: 0.4 }}>
+    <div style={{ height: '1px', width: '60px', background: 'var(--color-primary)' }}></div>
+    <span style={{ color: 'var(--color-primary)', fontSize: '1.2rem' }}>✦</span>
+    <div style={{ height: '1px', width: '60px', background: 'var(--color-primary)' }}></div>
+  </div>
 );
 
 const Countdown = ({ targetDate }) => {
@@ -66,103 +75,56 @@ const Countdown = ({ targetDate }) => {
 
 function EnvelopeScreen({ onOpen }) {
   const [isOpening, setIsOpening] = useState(false);
-  const [isCracked, setIsCracked] = useState(false);
 
-  const handleSealClick = () => {
-    setIsCracked(true);
+  const handleOpenClick = () => {
+    setIsOpening(true);
     
-    // Slow camera push in and flap opening sequence
-    setTimeout(() => {
-      setIsOpening(true);
-    }, 800); // Small pause after cracking
-
-    // Very slow cinematic reveal
+    // Smooth cinematic transition timing
     setTimeout(() => {
       onOpen();
-    }, 6500); 
+    }, 2500); 
   };
 
   return (
     <motion.div 
       className="envelope-overlay"
-      initial={{ opacity: 1, scale: 1 }}
-      animate={isOpening ? { scale: 1.15 } : (isCracked ? { scale: 1.05 } : { scale: 1 })}
-      transition={{ duration: 6, ease: "easeOut" }}
-      exit={{ opacity: 0, scale: 1.5, filter: 'blur(20px)', transition: { duration: 1.5, ease: "easeInOut" } }}
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0, transition: { duration: 1.2, ease: "easeInOut" } }}
     >
-      <div className="envelope-wrapper">
-        <div className="envelope">
+      <div className="envelope-wrapper" onClick={handleOpenClick}>
+        <motion.div 
+          className="envelope"
+          animate={isOpening ? { scale: 2.5, y: -200, opacity: 0 } : { scale: 1, y: 0, opacity: 1 }}
+          transition={{ duration: 2.2, ease: [0.4, 0, 0.2, 1] }}
+        >
           {/* Soft Natural Light Overlay */}
           <div className="envelope-light"></div>
           
           {/* Back of envelope */}
-          <motion.div 
-            className="envelope-back"
-            animate={isOpening ? { filter: 'blur(4px)' } : { filter: 'blur(0px)' }}
-            transition={{ duration: 2, delay: 1 }}
-          ></motion.div>
-
-
+          <div className="envelope-back"></div>
 
           {/* Bottom pocket of envelope */}
-          <motion.div 
-            className="envelope-pocket"
-            animate={isOpening ? { filter: 'blur(3px)' } : { filter: 'blur(0px)' }}
-            transition={{ duration: 2, delay: 1.5 }}
-          ></motion.div>
+          <div className="envelope-pocket"></div>
           
-          {/* Top cover flap */}
+          {/* Top cover flap with Seal attached */}
           <motion.div 
             className="envelope-flap"
-            initial={{ rotateX: 0, zIndex: 4 }}
-            animate={isOpening ? { rotateX: 180, zIndex: 1, filter: 'blur(3px)' } : { rotateX: 0, zIndex: 4, filter: 'blur(0px)' }}
-            transition={{ duration: 2.2, ease: "easeInOut" }}
-            style={{ transformOrigin: 'top' }}
-          />
-
-          {/* Red Wax Seal */}
-          <AnimatePresence>
-            {!isCracked ? (
-              <motion.div 
-                key="seal-intact"
-                className="wax-seal"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                exit={{ opacity: 0, transition: { duration: 0 } }}
-                onClick={handleSealClick}
-                whileHover={{ scale: 1.05, filter: 'brightness(1.1)' }}
-                whileTap={{ scale: 0.95 }}
-              >
-                K&B
-              </motion.div>
-            ) : (
-              <>
-                {/* Left cracked half */}
-                <motion.div
-                  key="seal-crack-left"
-                  className="wax-seal"
-                  initial={{ clipPath: 'polygon(0 0, 50% 0, 40% 30%, 60% 70%, 50% 100%, 0 100%)' }}
-                  animate={{ x: -40, y: 40, opacity: 0, rotate: -25, scale: 0.9 }}
-                  transition={{ duration: 1.5, ease: "easeIn" }}
-                  style={{ pointerEvents: 'none', filter: 'drop-shadow(-5px 5px 5px rgba(0,0,0,0.5))' }}
-                >
-                  K&B
-                </motion.div>
-                {/* Right cracked half */}
-                <motion.div
-                  key="seal-crack-right"
-                  className="wax-seal"
-                  initial={{ clipPath: 'polygon(50% 0, 100% 0, 100% 100%, 50% 100%, 60% 70%, 40% 30%)' }}
-                  animate={{ x: 40, y: 40, opacity: 0, rotate: 25, scale: 0.9 }}
-                  transition={{ duration: 1.5, ease: "easeIn" }}
-                  style={{ pointerEvents: 'none', filter: 'drop-shadow(5px 5px 5px rgba(0,0,0,0.5))' }}
-                >
-                  K&B
-                </motion.div>
-              </>
-            )}
-          </AnimatePresence>
-        </div>
+            initial={{ rotateX: 0 }}
+            animate={isOpening ? { rotateX: 180 } : { rotateX: 0 }}
+            transition={{ duration: 1.5, ease: "easeInOut", delay: 0.2 }}
+            style={{ 
+              transformOrigin: 'top', 
+              zIndex: 4,
+              transformStyle: 'preserve-3d'
+            }}
+          >
+            {/* Split Flap Background and Seal so Clip-Path doesn't hide the Seal */}
+            <div className="envelope-flap-bg"></div>
+            <div className="wax-seal-wrapper">
+              <img src={sealImg} alt="Wax Seal" className="wax-seal-img" />
+            </div>
+          </motion.div>
+        </motion.div>
       </div>
     </motion.div>
   );
@@ -170,6 +132,14 @@ function EnvelopeScreen({ onOpen }) {
 
 function App() {
   const [showInvite, setShowInvite] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [startMusic, setStartMusic] = useState(false);
+  
+  const handleOpen = () => {
+    setShowInvite(true);
+    setStartMusic(true);
+  };
+
   const { scrollY } = useScroll();
   const heroY = useTransform(scrollY, [0, 1000], [0, 300]);
   const heroOpacity = useTransform(scrollY, [0, 600], [1, 0]);
@@ -182,8 +152,35 @@ function App() {
   return (
     <>
       <AnimatePresence>
-        {!showInvite && <EnvelopeScreen onOpen={() => setShowInvite(true)} />}
+        {!showInvite && <EnvelopeScreen onOpen={handleOpen} />}
       </AnimatePresence>
+
+      {/* Background Music - Hidden YouTube Player */}
+      {startMusic && (
+        <div style={{ position: 'absolute', width: 0, height: 0, opacity: 0, pointerEvents: 'none' }}>
+          <iframe 
+            width="0" 
+            height="0" 
+            src={`https://www.youtube.com/embed/ixcKi765Iy8?autoplay=1&loop=1&playlist=ixcKi765Iy8&mute=${isMuted ? 1 : 0}`}
+            title="Mezmur"
+            frameBorder="0"
+            allow="autoplay"
+          ></iframe>
+        </div>
+      )}
+
+      {/* Floating Mute Button */}
+      {showInvite && (
+        <motion.button
+          className="mute-btn"
+          onClick={() => setIsMuted(!isMuted)}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 1, duration: 0.8 }}
+        >
+          {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+        </motion.button>
+      )}
 
       <main style={{ 
         opacity: showInvite ? 1 : 0, 
@@ -196,6 +193,8 @@ function App() {
         <section className="hero">
           <motion.img 
             style={{ y: heroY }}
+            animate={{ scale: [1, 1.1] }}
+            transition={{ duration: 20, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
             src={heroImg} 
             alt="Majestic Ethiopian Orthodox Church" 
             className="hero-bg"
@@ -204,21 +203,22 @@ function App() {
           
           <motion.div style={{ opacity: heroOpacity }} className="hero-content">
             <FadeIn delay={0.2}>
-              <div className="hero-date">October 15, 2026</div>
+              <div className="uppercase-mono" style={{ color: 'white', opacity: 0.9, marginBottom: '0.5rem' }}>October 15, 2026</div>
             </FadeIn>
             <FadeIn delay={0.5}>
-              <h1 className="hero-names" style={{ fontSize: '4.5rem' }}>
+              <h1 className="hero-names">
                 Kalkidan <span>&</span> Beteab
               </h1>
             </FadeIn>
             <FadeIn delay={0.8}>
-              <div className="hero-subtitle">Are getting married</div>
+              <div className="uppercase-mono" style={{ color: 'white', opacity: 0.9, fontSize: '0.7rem' }}>Are getting married</div>
             </FadeIn>
           </motion.div>
         </section>
 
         {/* --- OUR STORY / INTRODUCTION --- */}
-        <section className="section container">
+        <section className="section" style={{ background: 'var(--color-bg-alt)', borderRadius: '60px 60px 0 0', marginTop: '-60px', position: 'relative', zIndex: 1, padding: '10rem 1.5rem' }}>
+          <div className="container">
           <div className="story-grid">
             <FadeIn>
               <img 
@@ -232,15 +232,17 @@ function App() {
                 <div className="uppercase-mono text-accent" style={{ marginBottom: '1rem' }}>The Beginning</div>
               </FadeIn>
               <FadeIn delay={0.2}>
-                <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem' }}>A Love Story</h2>
+                <h2 style={{ fontSize: '3rem', marginBottom: '1.5rem', color: 'var(--color-primary)' }}>A Love Story</h2>
               </FadeIn>
               <FadeIn delay={0.4}>
-                <p style={{ marginBottom: '1.5rem', opacity: 0.8 }}>
+                <p style={{ marginBottom: '2rem', opacity: 0.8, fontSize: '1.1rem' }}>
                   We met under the twinkling lights of a crowded city, two paths converging in the most unexpected way. Since that day, every moment has been an adventure. We are thrilled to invite you to celebrate the next chapter of our story with us.
                 </p>
-                <h3 className="script-font" style={{ fontSize: '3rem', marginTop: '2rem', color: 'var(--color-text-main)' }}>K & B</h3>
+                <h3 className="script-font" style={{ fontSize: '3.5rem', marginTop: '2rem', color: 'var(--color-primary)' }}>K & B</h3>
               </FadeIn>
             </div>
+          </div>
+          <SectionDivider />
           </div>
         </section>
 
@@ -249,7 +251,8 @@ function App() {
           <FadeIn>
             <div className="text-center">
               <div className="uppercase-mono text-accent">Captured Moments</div>
-              <h2 style={{ fontSize: '3.5rem', margin: '1rem 0' }}>Our Gallery</h2>
+              <h2 style={{ display: 'block', fontSize: '3.5rem', margin: '1.5rem 0', color: 'var(--color-primary)' }}>Our Gallery</h2>
+              <SectionDivider />
             </div>
           </FadeIn>
           
@@ -349,13 +352,13 @@ function App() {
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="btn btn-outline" 
-                  style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', textDecoration: 'none' }}
                 >
                   <MapPin size={16} /> View Map
                 </a>
               </div>
             </FadeIn>
           </div>
+          <SectionDivider />
         </section>
 
         {/* --- FOOTER --- */}
