@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { MapPin, CalendarHeart, Clock, GlassWater, Volume2, VolumeX } from 'lucide-react';
+import { MapPin, CalendarHeart, Clock, GlassWater, Volume2, VolumeX, Languages } from 'lucide-react';
 import './index.css';
+import { translations } from './translations';
 
 // Importing local images from src/assets/
 import heroImg from './assets/hero.png';
@@ -36,7 +37,7 @@ const SectionDivider = () => (
   </div>
 );
 
-const Countdown = ({ targetDate }) => {
+const Countdown = ({ targetDate, t }) => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
@@ -66,7 +67,7 @@ const Countdown = ({ targetDate }) => {
           transition={{ duration: 0.6, delay: index * 0.15 }}
         >
           <span className="countdown-number">{value.toString().padStart(2, '0')}</span>
-          <span className="countdown-label">{unit}</span>
+          <span className="countdown-label">{t.countdown[unit]}</span>
         </motion.div>
       ))}
     </div>
@@ -135,6 +136,9 @@ function App() {
   const [showInvite, setShowInvite] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [startMusic, setStartMusic] = useState(false);
+  const [lang, setLang] = useState('en');
+  
+  const t = translations[lang];
   
   const handleOpen = () => {
     setShowInvite(true);
@@ -173,17 +177,40 @@ function App() {
         </div>
       )}
 
-      {/* Floating Mute Button */}
+      {/* Floating Controls */}
       {showInvite && (
-        <motion.button
-          className="mute-btn"
-          onClick={() => setIsMuted(!isMuted)}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1, duration: 0.8 }}
-        >
-          {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-        </motion.button>
+        <div className="floating-controls">
+          <motion.div 
+            className="lang-switcher"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+          >
+            <button 
+              className={`lang-btn ${lang === 'en' ? 'active' : ''}`} 
+              onClick={() => setLang('en')}
+            >
+              EN
+            </button>
+            <span style={{ opacity: 0.3 }}>|</span>
+            <button 
+              className={`lang-btn ${lang === 'am' ? 'active' : ''}`} 
+              onClick={() => setLang('am')}
+            >
+              አማ
+            </button>
+          </motion.div>
+
+          <motion.button
+            className="mute-btn"
+            onClick={() => setIsMuted(!isMuted)}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 1, duration: 0.8 }}
+          >
+            {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+          </motion.button>
+        </div>
       )}
 
       <main style={{ 
@@ -207,15 +234,15 @@ function App() {
           
           <motion.div style={{ opacity: heroOpacity }} className="hero-content">
             <FadeIn delay={0.2}>
-              <div className="uppercase-mono" style={{ color: 'white', opacity: 0.9, marginBottom: '0.5rem' }}>October 15, 2026</div>
+              <div className="uppercase-mono" style={{ color: 'white', opacity: 0.9, marginBottom: '0.5rem' }}>{t.hero.date}</div>
             </FadeIn>
             <FadeIn delay={0.5}>
               <h1 className="hero-names">
-                Kalkidan <span>&</span> Beteab
+                {lang === 'am' ? 'ካልኪዳን' : 'Kalkidan'} <span>&</span> {lang === 'am' ? 'ቢቲአብ' : 'Beteab'}
               </h1>
             </FadeIn>
             <FadeIn delay={0.8}>
-              <div className="uppercase-mono" style={{ color: 'white', opacity: 0.9, fontSize: '0.7rem' }}>Are getting married</div>
+              <div className="uppercase-mono" style={{ color: 'white', opacity: 0.9, fontSize: '0.7rem' }}>{t.hero.subtitle}</div>
             </FadeIn>
           </motion.div>
         </section>
@@ -233,16 +260,16 @@ function App() {
             </FadeIn>
             <div className="story-text">
               <FadeIn>
-                <div className="uppercase-mono text-accent" style={{ marginBottom: '1rem' }}>The Beginning</div>
+                <div className="uppercase-mono text-accent" style={{ marginBottom: '1rem' }}>{t.story.title}</div>
               </FadeIn>
               <FadeIn delay={0.2}>
-                <h2 style={{ fontSize: '3rem', marginBottom: '1.5rem', color: 'var(--color-primary)' }}>A Love Story</h2>
+                <h2 style={{ fontSize: '3rem', marginBottom: '1.5rem', color: 'var(--color-primary)' }}>{t.story.subtitle}</h2>
               </FadeIn>
               <FadeIn delay={0.4}>
                 <p style={{ marginBottom: '2rem', opacity: 0.8, fontSize: '1.1rem' }}>
-                  We met under the twinkling lights of a crowded city, two paths converging in the most unexpected way. Since that day, every moment has been an adventure. We are thrilled to invite you to celebrate the next chapter of our story with us.
+                  {t.story.text}
                 </p>
-                <h3 className="script-font" style={{ fontSize: '3.5rem', marginTop: '2rem', color: 'var(--color-primary)' }}>K & B</h3>
+                <h3 className="script-font" style={{ fontSize: '3.5rem', marginTop: '2rem', color: 'var(--color-primary)' }}>{t.story.initials}</h3>
               </FadeIn>
             </div>
           </div>
@@ -254,8 +281,8 @@ function App() {
         <section className="section container">
           <FadeIn>
             <div className="text-center">
-              <div className="uppercase-mono text-accent">Captured Moments</div>
-              <h2 style={{ display: 'block', fontSize: '3.5rem', margin: '1.5rem 0', color: 'var(--color-primary)' }}>Our Gallery</h2>
+              <div className="uppercase-mono text-accent">{t.gallery.title}</div>
+              <h2 style={{ display: 'block', fontSize: '3.5rem', margin: '1.5rem 0', color: 'var(--color-primary)' }}>{t.gallery.subtitle}</h2>
               <SectionDivider />
             </div>
           </FadeIn>
@@ -294,10 +321,10 @@ function App() {
         <section className="countdown-section">
           <div className="container">
             <FadeIn>
-              <div className="uppercase-mono">The Big Day</div>
-              <h2 style={{ fontSize: '2.5rem', marginTop: '1rem' }}>Counting Down</h2>
+              <div className="uppercase-mono">{t.countdown.title}</div>
+              <h2 style={{ fontSize: '2.5rem', marginTop: '1rem' }}>{t.countdown.subtitle}</h2>
             </FadeIn>
-            <Countdown targetDate={weddingDate} />
+            <Countdown targetDate={weddingDate} t={t} />
           </div>
         </section>
 
@@ -305,8 +332,8 @@ function App() {
         <section className="section container">
           <FadeIn>
             <div className="text-center">
-              <div className="uppercase-mono text-accent">When & Where</div>
-              <h2 style={{ fontSize: '3rem', margin: '1rem 0' }}>The Celebration</h2>
+              <div className="uppercase-mono text-accent">{t.events.title}</div>
+              <h2 style={{ fontSize: '3rem', margin: '1rem 0' }}>{t.events.subtitle}</h2>
             </div>
           </FadeIn>
 
@@ -315,15 +342,14 @@ function App() {
             <FadeIn delay={0.2}>
               <div className="event-card">
                 <CalendarHeart className="event-icon" size={40} strokeWidth={1.5} />
-                <h3 className="event-title">The Ceremony</h3>
+                <h3 className="event-title">{t.events.ceremony.title}</h3>
                 <div className="event-time">
                   <Clock size={16} className="inline mr-2" style={{ display: 'inline', verticalAlign: 'text-bottom', marginRight: '5px' }} /> 
-                  10:00 AM
+                  {t.events.ceremony.time}
                 </div>
                 <div className="event-address">
-                  <strong>Bole Medhane Alem Cathedral</strong><br />
-                  Cameroon Street<br />
-                  Addis Ababa, Ethiopia
+                  <strong>{t.events.ceremony.location}</strong><br />
+                  {t.events.ceremony.address}
                 </div>
                 <a 
                   href="https://www.google.com/maps/search/?api=1&query=Bole+Medhane+Alem+Cathedral,+Addis+Ababa" 
@@ -332,7 +358,7 @@ function App() {
                   className="btn btn-outline" 
                   style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', textDecoration: 'none' }}
                 >
-                  <MapPin size={16} /> View Map
+                  <MapPin size={16} /> {t.events.viewMap}
                 </a>
               </div>
             </FadeIn>
@@ -341,23 +367,23 @@ function App() {
             <FadeIn delay={0.4}>
               <div className="event-card">
                 <GlassWater className="event-icon" size={40} strokeWidth={1.5} />
-                <h3 className="event-title">The Reception</h3>
+                <h3 className="event-title">{t.events.reception.title}</h3>
                 <div className="event-time">
                   <Clock size={16} className="inline mr-2" style={{ display: 'inline', verticalAlign: 'text-bottom', marginRight: '5px' }} /> 
-                  6:00 PM
+                  {t.events.reception.time}
                 </div>
                 <div className="event-address">
-                  <strong>Ethiopian Skylight Hotel</strong><br />
-                  Bole Road<br />
-                  Addis Ababa, Ethiopia
+                  <strong>{t.events.reception.location}</strong><br />
+                  {t.events.reception.address}
                 </div>
                 <a 
                   href="https://www.google.com/maps/search/?api=1&query=Ethiopian+Skylight+Hotel,+Addis+Ababa" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="btn btn-outline" 
+                  style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', textDecoration: 'none' }}
                 >
-                  <MapPin size={16} /> View Map
+                  <MapPin size={16} /> {t.events.viewMap}
                 </a>
               </div>
             </FadeIn>
@@ -369,10 +395,10 @@ function App() {
         <footer className="footer">
           <FadeIn>
             <img src={sealImg} alt="Seal Logo" style={{ width: '60px', height: '60px', marginBottom: '1rem', filter: 'brightness(0.9)' }} />
-            <div className="footer-names" style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', color: 'var(--color-primary)' }}>Kalkidan & Beteab</div>
-            <div className="uppercase-mono" style={{ opacity: 0.7, margin: '1.5rem 0' }}>We can't wait to celebrate with you</div>
+            <div className="footer-names" style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', color: 'var(--color-primary)' }}>{lang === 'am' ? 'ካልኪዳን እና ቢቲአብ' : 'Kalkidan & Beteab'}</div>
+            <div className="uppercase-mono" style={{ opacity: 0.7, margin: '1.5rem 0' }}>{t.footer.message}</div>
             <div style={{ fontSize: '0.8rem', opacity: 0.5 }}>
-              © {new Date().getFullYear()} Kalkidan & Beteab. All Rights Reserved.
+              © {new Date().getFullYear()} {lang === 'am' ? 'ካልኪዳን እና ቢቲአብ' : 'Kalkidan & Beteab'}. {t.footer.rights}.
             </div>
           </FadeIn>
         </footer>
