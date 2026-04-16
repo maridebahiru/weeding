@@ -1,6 +1,7 @@
 export const translations = {
   en: {
     hero: {
+      title: "Kalkidan & Beteab",
       date: "October 15, 2026",
       subtitle: "Are getting married",
     },
@@ -46,12 +47,13 @@ export const translations = {
   },
   am: {
     hero: {
+      title: "ቃልኪዳን እና ቤተአብ",
       date: "ጥቅምት 5 ቀን 2019 ዓ.ም",
       subtitle: "ጋብቻቸውን ይፈፅማሉ",
     },
     countdown: {
-      title: "ትልቁ ቀን",
-      subtitle: "ቆጠራ",
+      title: "ጋብቻችን",
+      subtitle: "የቀሩት ቀናት",
       days: "ቀናት",
       hours: "ሰዓታት",
       minutes: "ደቂቃዎች",
@@ -61,7 +63,7 @@ export const translations = {
       title: "መጀመሪያው",
       subtitle: "የፍቅር ታሪክ",
       text: "በተጨናነቀች ከተማ ውስጥ በሚብረቀረቁ መብራቶች ስር ተገናኘን፣ ሁለት መንገዶች ባልታሰበ ሁኔታ ተገናኙ። ከዚያ ቀን ጀምሮ እያንዳንዱ ቅጽበት ትልቅ ትዝታ ነው። የሕይወታችንን ቀጣይ ምዕራፍ ከእኛ ጋር ለማክበር በመጋበዛችን ደስ ብሎናል።",
-      initials: "ካ እና ቢ"
+      initials: "ቃል እና ቤተ "
     },
     gallery: {
       title: "የተቀረጹ ትዝታዎች",

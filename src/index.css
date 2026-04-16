@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&family=Great+Vibes&display=swap');
 
+@font-face {
+  font-family: 'Benaiah';
+  src: url('./assets/Benaiah.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   /* Original Color Palette Reverted */
   --color-primary: #3A0B14;
@@ -12,9 +19,9 @@
   --color-text-muted: rgba(58, 11, 20, 0.7);
 
   /* Keep Heritage Theme Fonts */
-  --font-serif: 'Cormorant Garamond', serif;
-  --font-sans: 'Montserrat', sans-serif;
-  --font-script: 'Great Vibes', cursive;
+  --font-serif: 'Benaiah', 'Cormorant Garamond', serif;
+  --font-sans: 'Benaiah', 'Montserrat', sans-serif;
+  --font-script: 'Benaiah', 'Great Vibes', cursive;
 
   --spacing-section: 8rem;
   --container-width: 1100px;

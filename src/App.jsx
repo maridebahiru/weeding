@@ -238,7 +238,7 @@ function App() {
             </FadeIn>
             <FadeIn delay={0.5}>
               <h1 className="hero-names">
-                {lang === 'am' ? 'ካልኪዳን' : 'Kalkidan'} <span>&</span> {lang === 'am' ? 'ቢቲአብ' : 'Beteab'}
+                {lang === 'am' ? 'ቃልኪዳን እና ቤተአብ' : <>Kalkidan <span>&</span> Beteab</>}
               </h1>
             </FadeIn>
             <FadeIn delay={0.8}>
@@ -395,10 +395,10 @@ function App() {
         <footer className="footer">
           <FadeIn>
             <img src={sealImg} alt="Seal Logo" style={{ width: '60px', height: '60px', marginBottom: '1rem', filter: 'brightness(0.9)' }} />
-            <div className="footer-names" style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', color: 'var(--color-primary)' }}>{lang === 'am' ? 'ካልኪዳን እና ቢቲአብ' : 'Kalkidan & Beteab'}</div>
+            <div className="footer-names" style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', color: 'var(--color-primary)' }}>{lang === 'am' ? 'ቃልኪዳን እና ቤተአብ' : 'Kalkidan & Beteab'}</div>
             <div className="uppercase-mono" style={{ opacity: 0.7, margin: '1.5rem 0' }}>{t.footer.message}</div>
             <div style={{ fontSize: '0.8rem', opacity: 0.5 }}>
-              © {new Date().getFullYear()} {lang === 'am' ? 'ካልኪዳን እና ቢቲአብ' : 'Kalkidan & Beteab'}. {t.footer.rights}.
+              © {new Date().getFullYear()} {lang === 'am' ? 'ቃልኪዳን እና ቤተአብ' : 'Kalkidan & Beteab'}. {t.footer.rights}.
             </div>
           </FadeIn>
         </footer>
