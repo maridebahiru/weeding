@@ -136,7 +136,7 @@ function App() {
   const [showInvite, setShowInvite] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [startMusic, setStartMusic] = useState(false);
-  const [lang, setLang] = useState('en');
+  const [lang, setLang] = useState('am');
   
   const t = translations[lang];
   
