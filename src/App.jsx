@@ -3,18 +3,20 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { MapPin, CalendarHeart, Clock, GlassWater, Volume2, VolumeX, Languages } from 'lucide-react';
 import './index.css';
 import { translations } from './translations';
+import { ScrollTiltedGrid } from './components/ScrollTiltedGrid';
+import VideoPlayer from './components/VideoPlayer';
 
 // Importing local images from src/assets/
-import heroImg from './assets/hero.png';
-import storyImg from './assets/1.jpg';
-import gal1 from './assets/326ed2eaf73709e853d6f9807ba8b9fc.jpg';
-import gal2 from './assets/36c3412900dc3b6da9a861b937dba285.jpg';
-import gal3 from './assets/3b1b2aad08cbd20873671ecc648220f7.jpg';
-import gal4 from './assets/67c6f17f4b05bda8c5ca5ff4dad93460.jpg';
-import gal5 from './assets/e086dbcc504ffc7c6d6373cbd701e8d8.jpg';
-import gal6 from './assets/download.jpg';
-import gal7 from './assets/images.jfif';
-import gal8 from './assets/images (4).jfif';
+import heroImg from './assets/0A3A7334.jpg';
+import storyImg from './assets/0A3A7352.jpg';
+import gal1 from './assets/0A3A7364.jpg';
+import gal2 from './assets/0A3A7370.jpg';
+import gal3 from './assets/0A3A7393.jpg';
+import gal4 from './assets/0A3A7402.jpg';
+import gal5 from './assets/0A3A7441.jpg';
+import gal6 from './assets/0A3A7444.jpg';
+import gal7 from './assets/0A3A7447.jpg';
+import gal8 from './assets/0A3A7508.jpg';
 import sealImg from './assets/wax-seal.png';
 
 // Components
@@ -287,34 +289,26 @@ function App() {
             </div>
           </FadeIn>
           
-          <div className="gallery-grid">
-            {[
-              gal1,
-              gal2,
-              gal3,
-              gal4,
-              gal5,
-              gal6,
-              gal7,
-              gal8
-            ].map((src, index) => {
-              const isEven = index % 2 === 0;
-              return (
-              <motion.div 
-                key={index} 
-                className={`item-${index}`}
-                initial={{ opacity: 0, scale: 0.8, y: 100, rotate: isEven ? -6 : 6 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0, rotate: 0 }}
-                viewport={{ once: true, margin: "-20px" }}
-                transition={{ duration: 1.2, delay: (index % 3) * 0.15, type: "spring", bounce: 0.35 }}
-              >
-                <div className="gallery-item">
-                  <div className="gallery-overlay"></div>
-                  <img src={src} alt={`Wedding Moment ${index + 1}`} className="gallery-image" />
-                </div>
-              </motion.div>
-            )})}
-          </div>
+          <ScrollTiltedGrid 
+            images={[gal1, gal2, gal3, gal4, gal5, gal6, gal7, gal8]} 
+            maxWidth="none" 
+            loop={true} 
+            maxTilt={60}
+          />
+        </section>
+
+        {/* --- VIDEO HIGHLIGHTS SECTION --- */}
+        <section className="section container" style={{ paddingBottom: '4rem' }}>
+          <FadeIn>
+            <div className="text-center">
+              <div className="uppercase-mono text-accent">Moments</div>
+              <h2 style={{ display: 'block', fontSize: '3.5rem', margin: '1.5rem 0', color: 'var(--color-primary)' }}>Video Highlights</h2>
+              <SectionDivider />
+            </div>
+          </FadeIn>
+          <FadeIn delay={0.2}>
+             <VideoPlayer src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
+          </FadeIn>
         </section>
 
         {/* --- COUNTDOWN SECTION --- */}
