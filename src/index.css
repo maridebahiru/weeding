@@ -198,6 +198,7 @@ h6 {
   width: 100%;
   aspect-ratio: 4/5;
   object-fit: cover;
+  object-position: center 80%;
   border-radius: 200px 200px 0 0;
   /* Beautiful refined arch shape */
   box-shadow: 0 20px 40px rgba(44, 53, 49, 0.08);
