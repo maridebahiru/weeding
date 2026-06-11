@@ -154,10 +154,8 @@ function App() {
   const heroY = useTransform(scrollY, [0, 1000], [0, 300]);
   const heroOpacity = useTransform(scrollY, [0, 600], [1, 0]);
 
-  // Set the wedding date to future
-  const weddingDate = new Date();
-  weddingDate.setMonth(weddingDate.getMonth() + 3);
-  weddingDate.setDate(15);
+  // Set the wedding date
+  const weddingDate = new Date('2026-07-19T00:00:00');
 
   return (
     <>
@@ -271,7 +269,15 @@ function App() {
                 <p style={{ marginBottom: '2rem', opacity: 0.8, fontSize: '1.1rem' }}>
                   {t.story.text}
                 </p>
-                <h3 className="script-font" style={{ fontSize: '3.5rem', marginTop: '2rem', color: 'var(--color-primary)' }}>{t.story.initials}</h3>
+              </FadeIn>
+              
+              {/* Scaled Down Countdown between Verse and Initials */}
+              <div style={{ transform: 'scale(0.7)', transformOrigin: 'left center', margin: '-1rem 0' }}>
+                <Countdown targetDate={weddingDate} t={t} />
+              </div>
+
+              <FadeIn delay={0.6}>
+                <h3 className="script-font" style={{ fontSize: '3.5rem', marginTop: '1rem', color: 'var(--color-primary)' }}>{t.story.initials}</h3>
               </FadeIn>
             </div>
           </div>
@@ -309,17 +315,6 @@ function App() {
           <FadeIn delay={0.2}>
              <VideoPlayer src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
           </FadeIn>
-        </section>
-
-        {/* --- COUNTDOWN SECTION --- */}
-        <section className="countdown-section">
-          <div className="container">
-            <FadeIn>
-              <div className="uppercase-mono">{t.countdown.title}</div>
-              <h2 style={{ fontSize: '2.5rem', marginTop: '1rem' }}>{t.countdown.subtitle}</h2>
-            </FadeIn>
-            <Countdown targetDate={weddingDate} t={t} />
-          </div>
         </section>
 
         {/* --- EVENT DETAILS --- */}

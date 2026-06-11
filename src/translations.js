@@ -48,7 +48,7 @@ export const translations = {
   am: {
     hero: {
       title: "ቃልኪዳን እና ቤተአብ",
-      date: "ጥቅምት 5 ቀን 2019 ዓ.ም",
+      date: "ሓምሌ 12 ቀን 2018 ዓ.ም",
       subtitle: "ጋብቻቸውን ይፈፅማሉ",
     },
     countdown: {
@@ -60,9 +60,9 @@ export const translations = {
       seconds: "ሰከንዶች",
     },
     story: {
-      title: "መጀመሪያው",
-      subtitle: "የፍቅር ታሪክ",
-      text: "በተጨናነቀች ከተማ ውስጥ በሚብረቀረቁ መብራቶች ስር ተገናኘን፣ ሁለት መንገዶች ባልታሰበ ሁኔታ ተገናኙ። ከዚያ ቀን ጀምሮ እያንዳንዱ ቅጽበት ትልቅ ትዝታ ነው። የሕይወታችንን ቀጣይ ምዕራፍ ከእኛ ጋር ለማክበር በመጋበዛችን ደስ ብሎናል።",
+      title: " ",
+      subtitle: "ዮሐ.2:1",
+      text: "የኢየሱስም እናት በዚያ ነበረች።",
       initials: "ቃል እና ቤተ "
     },
     gallery: {

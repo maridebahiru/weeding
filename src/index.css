@@ -336,7 +336,7 @@ h6 {
   justify-content: center;
   gap: 1.5rem;
   margin-top: 3rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 @media (min-width: 768px) {
