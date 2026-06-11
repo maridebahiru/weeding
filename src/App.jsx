@@ -222,28 +222,31 @@ function App() {
       }}>
         {/* --- HERO SECTION --- */}
         <section className="hero">
+          {/* Main Image */}
           <motion.img 
-            style={{ y: heroY }}
+            style={{ y: heroY, transformOrigin: 'center 53%' }}
             animate={{ scale: [1, 1.1] }}
             transition={{ duration: 20, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
             src={heroImg} 
-            alt="Majestic Ethiopian Orthodox Church" 
+            alt="Couple" 
             className="hero-bg"
           />
           <div className="hero-overlay"></div>
           
           <motion.div style={{ opacity: heroOpacity }} className="hero-content">
-            <FadeIn delay={0.2}>
-              <div className="uppercase-mono" style={{ color: 'white', opacity: 0.9, marginBottom: '0.5rem' }}>{t.hero.date}</div>
-            </FadeIn>
-            <FadeIn delay={0.5}>
-              <h1 className="hero-names">
-                {lang === 'am' ? 'ቃልኪዳን እና ቤተአብ' : <>Kalkidan <span>&</span> Beteab</>}
-              </h1>
-            </FadeIn>
-            <FadeIn delay={0.8}>
-              <div className="uppercase-mono" style={{ color: 'white', opacity: 0.9, fontSize: '0.7rem' }}>{t.hero.subtitle}</div>
-            </FadeIn>
+            <div className="hero-content-bottom">
+              <FadeIn delay={0.5}>
+                <h1 className="hero-names">
+                  {lang === 'am' ? 'ቃልኪዳን እና ቤተአብ' : <>Kalkidan <span>&</span> Beteab</>}
+                </h1>
+              </FadeIn>
+              <FadeIn delay={0.6}>
+                <div className="uppercase-mono" style={{ color: 'white', opacity: 0.8, letterSpacing: '0.2rem', margin: '0.5rem 0' }}>{t.hero.date}</div>
+              </FadeIn>
+              <FadeIn delay={0.8}>
+                <div className="uppercase-mono" style={{ color: 'white', opacity: 0.9, fontSize: '0.7rem' }}>{t.hero.subtitle}</div>
+              </FadeIn>
+            </div>
           </motion.div>
         </section>
 

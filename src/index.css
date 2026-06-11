@@ -122,8 +122,8 @@ h6 {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 53%;
   z-index: -2;
-  transform: scale(1.1);
 }
 
 .hero-overlay {
@@ -132,32 +132,41 @@ h6 {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(44, 53, 49, 0.1) 0%, rgba(44, 53, 49, 0.4) 100%);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.6) 100%);
   z-index: -1;
 }
 
 .hero-content {
-  text-align: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 35vh;
   z-index: 10;
+}
+
+.hero-content-bottom {
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
-  padding: 0 1.5rem;
+  gap: 0.5rem;
 }
 
 .hero-names {
-  font-size: 4rem;
+  font-size: 2.5rem;
   font-family: var(--font-serif);
   font-weight: 300;
   line-height: 1;
   margin-bottom: 0.5rem;
-  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
 }
 
 @media (min-width: 768px) {
   .hero-names {
-    font-size: 6.5rem;
+    font-size: 5.5rem;
   }
 }
 
@@ -481,7 +490,8 @@ h6 {
 
 .btn {
   display: inline-block;
-  background: rgba(58, 11, 20, 0.85); /* Semi-transparent Burgundy */
+  background: rgba(58, 11, 20, 0.85);
+  /* Semi-transparent Burgundy */
   backdrop-filter: blur(8px);
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -572,8 +582,9 @@ h6 {
     max-height: none;
     aspect-ratio: auto;
   }
-  .envelope, 
-  .envelope-back, 
+
+  .envelope,
+  .envelope-back,
   .envelope-flap {
     border-radius: 0 !important;
   }
@@ -670,7 +681,7 @@ h6 {
   width: 100%;
   height: 100%;
   background: var(--color-primary);
-  background-image: 
+  background-image:
     linear-gradient(135deg, rgba(178, 201, 186, 0.1) 0%, rgba(0, 0, 0, 0.2) 100%),
     url("https://www.transparenttextures.com/patterns/natural-paper.png");
   clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0, 50% 55%);
@@ -698,7 +709,7 @@ h6 {
   position: absolute;
   inset: 0;
   background: var(--color-primary);
-  background-image: 
+  background-image:
     linear-gradient(180deg, var(--color-primary) 0%, #2A3620 100%),
     url("https://www.transparenttextures.com/patterns/natural-paper.png");
   clip-path: polygon(0 0, 100% 0, 50% 100%);
@@ -711,12 +722,14 @@ h6 {
   left: 50%;
   transform: translateX(-50%) translateY(50%) translateZ(10px);
   z-index: 50;
-  pointer-events: none; /* Let parent handle click if needed, or set to auto if seal is clicked */
+  pointer-events: none;
+  /* Let parent handle click if needed, or set to auto if seal is clicked */
 }
 
 /* Wax Seal Style using Image Asset */
 .wax-seal-img {
-  width: 140px; /* Slightly larger for realism */
+  width: 140px;
+  /* Slightly larger for realism */
   height: auto;
   pointer-events: auto;
   cursor: pointer;
