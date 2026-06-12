@@ -13,7 +13,8 @@ async function optimizeImages() {
   const files = fs.readdirSync(assetsDir);
   
   for (const file of files) {
-    if (file.endsWith('.jpg') || file.endsWith('.png') || file.endsWith('.jpeg')) {
+    const lowerFile = file.toLowerCase();
+    if (lowerFile.endsWith('.jpg') || lowerFile.endsWith('.png') || lowerFile.endsWith('.jpeg')) {
       const filePath = path.join(assetsDir, file);
       const stats = fs.statSync(filePath);
       
