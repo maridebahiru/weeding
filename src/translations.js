@@ -85,13 +85,13 @@ export const translations = {
       subtitle: "ክብረ በዓሉ",
       ceremony: {
         title: "ሥነ-ሥርዓቱ",
-        time: "ጠዋት 4:00 ሰዓት",
+        time: "ቅዳሴ",
         location: "ደብረ መንክራት ቅዱስ ዑራኤል ወበዓታ ለማርያም ካቴድራል",
         address: "ድሬዳዋ፣ ኢትዮጵያ",
       },
       reception: {
         title: "የግብዣው ሥነ-ሥርዓት",
-        time: "ምሽት 12:00 ሰዓት",
+        time: "ምሽት 11:30 ሰዓት",
         location: "ኢትዮ-ጣልያን ፖሊቴክሊክ ኮሌጅ",
         address: "ሳቢያ፣ ድሬዳዋ፣ ኢትዮጵያ",
       },

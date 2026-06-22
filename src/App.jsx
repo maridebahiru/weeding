@@ -6,6 +6,7 @@ import { translations } from './translations';
 import { ScrollTiltedGrid } from './components/ScrollTiltedGrid';
 import VideoPlayer from './components/VideoPlayer';
 import Guestbook from './components/Guestbook';
+import AdminPage from './components/AdminPage';
 
 // Importing local images from src/assets/
 import heroImg from './assets/0A3A7334.jpg';
@@ -149,6 +150,16 @@ function EnvelopeScreen({ onOpen, onStart }) {
 }
 
 function App() {
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+
+  useEffect(() => {
+    const handleLocationChange = () => {
+      setCurrentPath(window.location.pathname);
+    };
+    window.addEventListener('popstate', handleLocationChange);
+    return () => window.removeEventListener('popstate', handleLocationChange);
+  }, []);
+
   const [showInvite, setShowInvite] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [startMusic, setStartMusic] = useState(false);
@@ -170,6 +181,10 @@ function App() {
 
   // Set the wedding date
   const weddingDate = new Date('2026-07-19T00:00:00');
+
+  if (currentPath === '/admin' || currentPath === '/admin/') {
+    return <AdminPage />;
+  }
 
   return (
     <>

@@ -1,47 +1,54 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase';
-import { collection, query, orderBy, onSnapshot, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Heart } from 'lucide-react';
+import { Send, Heart, CheckCircle2, RotateCcw } from 'lucide-react';
 
 export default function Guestbook({ lang, t }) {
-  const [wishes, setWishes] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [guestName, setGuestName] = useState('');
   const [guestWish, setGuestWish] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submittedWish, setSubmittedWish] = useState(null);
 
-  // Fetch Wishes on Mount
+  // Check for existing submission in localStorage on mount
   useEffect(() => {
-    const q = query(collection(db, "wishes"), orderBy("createdAt", "desc"));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const wishesData = [];
-      snapshot.forEach((doc) => wishesData.push({ id: doc.id, ...doc.data() }));
-      setWishes(wishesData);
-      setLoading(false);
-    }, (error) => {
-      console.error("Error fetching wishes: ", error);
-      setLoading(false);
-    });
-    return () => unsubscribe();
+    const savedWish = localStorage.getItem('wedding_submitted_wish');
+    if (savedWish) {
+      try {
+        setSubmittedWish(JSON.parse(savedWish));
+      } catch (e) {
+        console.error("Error parsing stored wish:", e);
+      }
+    }
   }, []);
 
-  // Send Wish
+  // Send Wish to Firestore
   const handleSendWish = async (e) => {
     e.preventDefault();
     if (guestName.trim() && guestWish.trim()) {
       setSubmitting(true);
       try {
-        await addDoc(collection(db, "wishes"), {
+        const wishData = {
           name: guestName.trim(),
           text: guestWish.trim(),
+          createdAt: new Date().toISOString()
+        };
+
+        // Save to Firestore
+        await addDoc(collection(db, "wishes"), {
+          name: wishData.name,
+          text: wishData.text,
           createdAt: serverTimestamp()
         });
+
+        // Save to localStorage
+        localStorage.setItem('wedding_submitted_wish', JSON.stringify(wishData));
+        
+        setSubmittedWish(wishData);
         setGuestName('');
         setGuestWish('');
         setSubmitted(true);
-        setTimeout(() => setSubmitted(false), 5000);
       } catch (error) {
         console.error("Error adding wish: ", error);
       } finally {
@@ -50,10 +57,17 @@ export default function Guestbook({ lang, t }) {
     }
   };
 
+  // Allow guests to reset and submit another wish
+  const handleWriteAnother = () => {
+    localStorage.removeItem('wedding_submitted_wish');
+    setSubmittedWish(null);
+    setSubmitted(false);
+  };
+
   // Helper to format date
-  const formatDate = (timestamp) => {
-    if (!timestamp) return '';
-    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+  const formatDate = (dateStr) => {
+    if (!dateStr) return '';
+    const date = new Date(dateStr);
     if (lang === 'am') {
       return date.toLocaleDateString('am-ET', { month: 'long', day: 'numeric', year: 'numeric' });
     }
@@ -63,123 +77,111 @@ export default function Guestbook({ lang, t }) {
   const gt = t.guestbook;
 
   return (
-    <div className="guestbook-grid">
-      {/* Form Column */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1 }}
-      >
-        <div className="signboard-wish-section">
-          <form className="wish-form" onSubmit={handleSendWish}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '0.5rem' }}>
-              <Heart size={20} className="text-accent" style={{ color: 'var(--color-accent)' }} fill="var(--color-accent)" />
-              <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.75rem', color: 'var(--color-primary)' }}>{gt.subtitle}</h3>
+    <div className="guestbook-centered-container">
+      <AnimatePresence mode="wait">
+        {submittedWish ? (
+          /* Confirmation / Thank You Screen */
+          <motion.div
+            key="confirmation"
+            className="wish-confirmation-card"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="confirmation-header">
+              <CheckCircle2 size={42} className="confirmation-icon" />
+              <h3>{lang === 'am' ? 'የደስታ መግለጫዎ ደርሶናል!' : 'Thank you for your blessings!'}</h3>
+              <p className="confirmation-subheader">{gt.successMsg}</p>
             </div>
-            
-            <div className="wish-input-wrapper">
-              <input
-                type="text"
-                className="wish-input"
-                placeholder={gt.namePlaceholder}
-                value={guestName}
-                onChange={(e) => setGuestName(e.target.value)}
-                required
+
+            <div className="confirmed-wish-display">
+              <span className="quote-mark open">“</span>
+              <p className="confirmed-wish-text">{submittedWish.text}</p>
+              <span className="quote-mark close">”</span>
+              
+              <div className="confirmed-wish-meta">
+                <span className="confirmed-author">— {submittedWish.name}</span>
+                <span className="confirmed-date">{formatDate(submittedWish.createdAt)}</span>
+              </div>
+            </div>
+
+            <div className="confirmation-actions">
+              <button 
+                onClick={handleWriteAnother} 
+                className="btn btn-outline btn-another-wish"
+                style={{ 
+                  display: 'inline-flex', 
+                  alignItems: 'center', 
+                  gap: '8px', 
+                  padding: '0.8rem 2rem', 
+                  fontSize: '0.7rem' 
+                }}
+              >
+                <RotateCcw size={12} />
+                {lang === 'am' ? 'ሌላ ምኞት ይጻፉ' : 'Write another wish'}
+              </button>
+            </div>
+          </motion.div>
+        ) : (
+          /* Wish Submission Form Screen */
+          <motion.div
+            key="wish-form"
+            className="guestbook-form-card"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
+          >
+            <form className="wish-form" onSubmit={handleSendWish}>
+              <div className="form-header-icon">
+                <Heart size={24} className="text-accent" fill="var(--color-accent)" />
+                <h3 className="form-title">{gt.subtitle}</h3>
+              </div>
+              
+              <div className="wish-input-wrapper">
+                <input
+                  type="text"
+                  className="wish-input"
+                  placeholder={gt.namePlaceholder}
+                  value={guestName}
+                  onChange={(e) => setGuestName(e.target.value)}
+                  required
+                  disabled={submitting}
+                />
+              </div>
+
+              <div className="wish-input-wrapper">
+                <textarea
+                  className="wish-textarea"
+                  placeholder={gt.wishPlaceholder}
+                  value={guestWish}
+                  onChange={(e) => setGuestWish(e.target.value)}
+                  required
+                  disabled={submitting}
+                />
+              </div>
+
+              <button 
+                type="submit" 
+                className="btn btn-animated" 
                 disabled={submitting}
-              />
-            </div>
-
-            <div className="wish-input-wrapper">
-              <textarea
-                className="wish-textarea"
-                placeholder={gt.wishPlaceholder}
-                value={guestWish}
-                onChange={(e) => setGuestWish(e.target.value)}
-                required
-                disabled={submitting}
-              />
-            </div>
-
-            <button 
-              type="submit" 
-              className="btn btn-animated" 
-              disabled={submitting}
-              style={{ 
-                width: '100%', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center', 
-                gap: '8px',
-                borderRadius: '4px' 
-              }}
-            >
-              <Send size={14} />
-              {submitting ? gt.submittingBtn : gt.submitBtn}
-            </button>
-
-            <AnimatePresence>
-              {submitted && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  style={{
-                    color: 'var(--color-primary)',
-                    fontSize: '0.9rem',
-                    textAlign: 'center',
-                    marginTop: '8px',
-                    fontFamily: 'var(--font-sans)',
-                    fontWeight: 500
-                  }}
-                >
-                  ✦ {gt.successMsg}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </form>
-        </div>
-      </motion.div>
-
-      {/* List Column */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1 }}
-      >
-        <div className="wishes-list-container">
-          {loading ? (
-            <div className="guestbook-loading">
-              <p>{gt.loading}</p>
-            </div>
-          ) : wishes.length === 0 ? (
-            <div className="guestbook-empty">
-              <p>{gt.noWishes}</p>
-            </div>
-          ) : (
-            <div className="wishes-list">
-              <AnimatePresence initial={false}>
-                {wishes.map((wish, index) => (
-                  <motion.div
-                    key={wish.id}
-                    className="wish-card"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.5) }}
-                  >
-                    <p className="wish-text">“ {wish.text} ”</p>
-                    <p className="wish-author">— {wish.name}</p>
-                    {wish.createdAt && (
-                      <p className="wish-date">{formatDate(wish.createdAt)}</p>
-                    )}
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </div>
-          )}
-        </div>
-      </motion.div>
+                style={{ 
+                  width: '100%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  gap: '8px',
+                  borderRadius: '4px' 
+                }}
+              >
+                <Send size={14} />
+                {submitting ? gt.submittingBtn : gt.submitBtn}
+              </button>
+            </form>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
