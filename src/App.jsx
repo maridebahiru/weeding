@@ -39,7 +39,7 @@ const FadeIn = ({ children, delay = 0 }) => (
   <motion.div
     initial={{ opacity: 0, y: 30 }}
     whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-100px" }}
+    viewport={{ once: true, margin: "-30px" }}
     transition={{ duration: 1.5, delay, ease: [0.25, 0.1, 0.25, 1] }}
   >
     {children}
@@ -246,7 +246,8 @@ function App() {
         opacity: showInvite ? 1 : 0,
         pointerEvents: showInvite ? 'auto' : 'none',
         height: showInvite ? 'auto' : '100vh',
-        overflow: showInvite ? 'auto' : 'hidden',
+        overflowX: 'hidden',
+        overflowY: showInvite ? 'auto' : 'hidden',
         transition: 'opacity 1.5s ease-in-out'
       }}>
         {/* --- HERO SECTION --- */}
@@ -312,7 +313,7 @@ function App() {
                       <div className="uppercase-mono text-accent" style={{ marginBottom: '1rem' }}>{t.story.title}</div>
                     </FadeIn>
                     <FadeIn delay={0.2}>
-                      <h2 style={{ fontSize: '3rem', marginBottom: '1.5rem', color: 'var(--color-primary)' }}>{t.story.subtitle}</h2>
+                      <h2 className="responsive-h2-medium" style={{ marginBottom: '1.5rem', color: 'var(--color-primary)' }}>{t.story.subtitle}</h2>
                     </FadeIn>
                     <FadeIn delay={0.4}>
                       <p style={{ marginBottom: '2rem', opacity: 0.8, fontSize: '1.1rem' }}>
@@ -341,7 +342,7 @@ function App() {
           <FadeIn>
             <div className="text-center">
               <div className="uppercase-mono text-accent">{t.gallery.title}</div>
-              <h2 style={{ display: 'block', fontSize: '3.5rem', margin: '1.5rem 0', color: 'var(--color-primary)' }}>{t.gallery.subtitle}</h2>
+              <h2 className="responsive-h2" style={{ display: 'block', margin: '1.5rem 0', color: 'var(--color-primary)' }}>{t.gallery.subtitle}</h2>
               <SectionDivider />
             </div>
           </FadeIn>
@@ -362,7 +363,7 @@ function App() {
           <FadeIn>
             <div className="text-center">
               <div className="uppercase-mono text-accent">Moments</div>
-              <h2 style={{ display: 'block', fontSize: '3.5rem', margin: '1.5rem 0', color: 'var(--color-primary)' }}>Video Highlights</h2>
+              <h2 className="responsive-h2" style={{ display: 'block', margin: '1.5rem 0', color: 'var(--color-primary)' }}>Video Highlights</h2>
               <SectionDivider />
             </div>
           </FadeIn>
@@ -376,7 +377,7 @@ function App() {
           <FadeIn>
             <div className="text-center">
               <div className="uppercase-mono text-accent">{t.events.title}</div>
-              <h2 style={{ fontSize: '3rem', margin: '1rem 0', color: 'var(--color-primary)' }}>{t.events.subtitle}</h2>
+              <h2 className="responsive-h2-medium" style={{ margin: '1rem 0', color: 'var(--color-primary)' }}>{t.events.subtitle}</h2>
             </div>
           </FadeIn>
 
@@ -457,7 +458,7 @@ function App() {
           <FadeIn>
             <div className="text-center">
               <div className="uppercase-mono text-accent">{t.guestbook.title}</div>
-              <h2 style={{ display: 'block', fontSize: '3.5rem', margin: '1.5rem 0', color: 'var(--color-primary)' }}>
+              <h2 className="responsive-h2" style={{ display: 'block', margin: '1.5rem 0', color: 'var(--color-primary)' }}>
                 {t.guestbook.subtitle}
               </h2>
               <SectionDivider />

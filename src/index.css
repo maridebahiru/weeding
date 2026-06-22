@@ -1572,3 +1572,71 @@ h6 {
     margin: 0.2rem 0;
   }
 }
+
+/* ========================================================= */
+/* MOBILE RESPONSIVE LAYOUT OPTIMIZATIONS & HEADERS */
+/* ========================================================= */
+
+.responsive-h2 {
+  font-size: 2rem !important; /* Elegant mobile-sized heading */
+  line-height: 1.3;
+}
+
+@media (min-width: 768px) {
+  .responsive-h2 {
+    font-size: 3.5rem !important; /* Scale up on desktop */
+  }
+}
+
+.responsive-h2-medium {
+  font-size: 1.75rem !important;
+  line-height: 1.3;
+}
+
+@media (min-width: 768px) {
+  .responsive-h2-medium {
+    font-size: 3rem !important;
+  }
+}
+
+/* Adjust layout containers and spacing on mobile */
+@media (max-width: 768px) {
+  /* Center event cards and restrict padding to prevent overflow */
+  .event-cards {
+    align-items: center !important;
+    padding: 0 0.5rem;
+  }
+
+  .event-card {
+    padding: 2rem 1.5rem !important;
+    width: 100%;
+    max-width: 100% !important;
+  }
+
+  /* Wish signboard cards padding reduction */
+  .wish-form {
+    padding: 1.75rem 1.25rem !important;
+  }
+
+  .wish-confirmation-card {
+    padding: 2.2rem 1.5rem !important;
+  }
+
+  .confirmed-wish-display {
+    padding: 1.5rem 1rem !important;
+  }
+  
+  .confirmed-wish-text {
+    font-size: 1.15rem !important;
+  }
+
+  /* Reduce space on section margins */
+  .section {
+    padding: 4rem 1.25rem !important;
+  }
+  
+  .story-grid {
+    gap: 2.5rem !important;
+    margin-top: 2.5rem !important;
+  }
+}

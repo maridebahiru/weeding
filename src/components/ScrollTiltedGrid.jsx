@@ -31,19 +31,27 @@ function Tile({ src, side, config }) {
 
   const reduce = useReducedMotion();
   const sign = side === "L" ? -1 : 1;
-  const { aspectRatio, perspective, maxTilt, maxBlur, rounded } = config;
+  const { aspectRatio, perspective, maxTilt, maxBlur, rounded, isMobile } = config;
 
-  const blur = useTransform(p, [0, 0.5, 1], [maxBlur, 0, maxBlur], { ease: focusEase });
-  const bright = useTransform(p, [0, 0.5, 1], [0, 1, 0], { ease: focusEase });
+  // Scale down the intensity of tilt, blur, skew, and translation on mobile to prevent overflow
+  const activeMaxTilt = isMobile ? Math.min(maxTilt, 12) : maxTilt;
+  const activeMaxBlur = isMobile ? Math.min(maxBlur, 3) : maxBlur;
+  const activeTxPercent = isMobile ? 8 : 40;
+  const activeSkewDeg = isMobile ? 4 : 20;
+  const activeTzDepth = isMobile ? 80 : 300;
+  const activeRotDeg = isMobile ? 1.5 : 5;
+
+  const blur = useTransform(p, [0, 0.5, 1], [activeMaxBlur, 0, activeMaxBlur], { ease: focusEase });
+  const bright = useTransform(p, [0, 0.5, 1], [0.1, 1, 0.1], { ease: focusEase });
   const contrast = useTransform(p, [0, 0.5, 1], [4, 1, 4], { ease: focusEase });
 
   const ty = useTransform(p, [0, 0.5, 1], ["100%", "0%", "-100%"], { ease: focusEase });
-  const tz = useTransform(p, [0, 0.5, 1], [300, 0, 300], { ease: focusEase });
-  const rx = useTransform(p, [0, 0.5, 1], [maxTilt, 0, -maxTilt], { ease: focusEase });
+  const tz = useTransform(p, [0, 0.5, 1], [activeTzDepth, 0, activeTzDepth], { ease: focusEase });
+  const rx = useTransform(p, [0, 0.5, 1], [activeMaxTilt, 0, -activeMaxTilt], { ease: focusEase });
 
-  const tx = useTransform(p, [0, 0.5, 1], [`${sign * 40}%`, "0%", `${sign * 40}%`], { ease: focusEase });
-  const rot = useTransform(p, [0, 0.5, 1], [-sign * 5, 0, sign * 5], { ease: focusEase });
-  const sk = useTransform(p, [0, 0.5, 1], [sign * 20, 0, -sign * 20], { ease: focusEase });
+  const tx = useTransform(p, [0, 0.5, 1], [`${sign * activeTxPercent}%`, "0%", `${sign * activeTxPercent}%`], { ease: focusEase });
+  const rot = useTransform(p, [0, 0.5, 1], [-sign * activeRotDeg, 0, sign * activeRotDeg], { ease: focusEase });
+  const sk = useTransform(p, [0, 0.5, 1], [sign * activeSkewDeg, 0, -sign * activeSkewDeg], { ease: focusEase });
 
   const innerSY = useTransform(p, [0, 0.5, 1], [1.8, 1, 1.8], { ease: focusEase });
 
@@ -125,7 +133,17 @@ export function ScrollTiltedGrid({
   className = "",
 }) {
   const [cycles, setCycles] = useState(loop ? initialCycles : 1);
+  const [isMobile, setIsMobile] = useState(false);
   const sentinelRef = useRef(null);
+
+  // Monitor screen size dynamically for mobile layout adjustment
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 768px)");
+    const listener = () => setIsMobile(media.matches);
+    listener();
+    media.addEventListener("change", listener);
+    return () => media.removeEventListener("change", listener);
+  }, []);
 
   useEffect(() => {
     if (!loop) return;
@@ -149,8 +167,8 @@ export function ScrollTiltedGrid({
   );
 
   const config = useMemo(
-    () => ({ aspectRatio, perspective, maxTilt, maxBlur, rounded }),
-    [aspectRatio, perspective, maxTilt, maxBlur, rounded],
+    () => ({ aspectRatio, perspective, maxTilt, maxBlur, rounded, isMobile }),
+    [aspectRatio, perspective, maxTilt, maxBlur, rounded, isMobile],
   );
 
   const gridStyle = {
@@ -158,8 +176,8 @@ export function ScrollTiltedGrid({
     gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
     width: '100%',
     maxWidth: MAX_WIDTH_MAP[maxWidth] || '100%',
-    margin: '10vh auto',
-    gap: `${gap * 0.25}rem`,
+    margin: isMobile ? '4vh auto' : '10vh auto',
+    gap: `${isMobile ? 0.5 : gap * 0.25}rem`,
   };
 
   return (
