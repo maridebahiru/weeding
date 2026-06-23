@@ -292,36 +292,20 @@ function App() {
                 />
               </FadeIn>
               <div className="story-text">
-                {lang === 'am' ? (
-                  <div style={{ display: 'flex', flexDirection: 'column', color: 'var(--color-primary)', marginBottom: '2rem' }}>
-                    <FadeIn>
-                      <h2 className="story-quote" style={{ fontSize: '2.5rem', marginBottom: '0.5rem', fontFamily: 'var(--font-serif)', lineHeight: 1.4, fontWeight: 400 }}>
-                        «...የኢየሱስም እናት በዚያ ነበረች»
-                      </h2>
-                    </FadeIn>
-                    <FadeIn delay={0.2}>
-                      <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%', paddingRight: '1rem' }}>
-                        <span style={{ fontSize: '1.5rem', fontFamily: 'var(--font-serif)', fontWeight: 500 }}>
-                          ዮሐ.2÷1
-                        </span>
-                      </div>
-                    </FadeIn>
-                  </div>
-                ) : (
-                  <>
-                    <FadeIn>
-                      <div className="uppercase-mono text-accent" style={{ marginBottom: '1rem' }}>{t.story.title}</div>
-                    </FadeIn>
-                    <FadeIn delay={0.2}>
-                      <h2 className="responsive-h2-medium" style={{ marginBottom: '1.5rem', color: 'var(--color-primary)' }}>{t.story.subtitle}</h2>
-                    </FadeIn>
-                    <FadeIn delay={0.4}>
-                      <p style={{ marginBottom: '2rem', opacity: 0.8, fontSize: '1.1rem' }}>
-                        {t.story.text}
-                      </p>
-                    </FadeIn>
-                  </>
-                )}
+                <div style={{ display: 'flex', flexDirection: 'column', color: 'var(--color-primary)', marginBottom: '2rem' }}>
+                  <FadeIn>
+                    <h2 className="story-quote" style={{ fontSize: '2.5rem', marginBottom: '0.5rem', fontFamily: 'var(--font-serif)', lineHeight: 1.4, fontWeight: 400 }}>
+                      {t.story.text}
+                    </h2>
+                  </FadeIn>
+                  <FadeIn delay={0.2}>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%', paddingRight: '1rem' }}>
+                      <span style={{ fontSize: '1.5rem', fontFamily: 'var(--font-serif)', fontWeight: 500 }}>
+                        {t.story.subtitle}
+                      </span>
+                    </div>
+                  </FadeIn>
+                </div>
 
                 {/* Scaled Down Countdown between Verse and Initials */}
                 <div style={{ transform: 'scale(0.7)', transformOrigin: 'left center', margin: '-1rem 0' }}>

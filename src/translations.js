@@ -14,10 +14,10 @@ export const translations = {
       seconds: "seconds",
     },
     story: {
-      title: "The Beginning",
-      subtitle: "A Love Story",
-      text: "We met under the twinkling lights of a crowded city, two paths converging in the most unexpected way. Since that day, every moment has been an adventure. We are thrilled to invite you to celebrate the next chapter of our story with us.",
-      initials: "K & B"
+      title: "",
+      subtitle: "John 2:1",
+      text: "“...The mother of Jesus was there.”",
+      initials: "Kal & Bete"
     },
     gallery: {
       title: "Captured Moments",
@@ -28,13 +28,13 @@ export const translations = {
       subtitle: "The Celebration",
       ceremony: {
         title: "The Ceremony",
-        time: "10:00 AM",
+        time: "The Holy Mass",
         location: "Debre Menkirat St. Urael & Baata Maryam Cathedral",
         address: "Dire Dawa, Ethiopia",
       },
       reception: {
         title: "The Reception",
-        time: "6:00 PM",
+        time: "11:30 LT",
         location: "Ethio-Italian Polytechnic College",
         address: "Sabiya, Dire Dawa, Ethiopia",
       },
@@ -71,9 +71,9 @@ export const translations = {
       seconds: "ሰከንዶች",
     },
     story: {
-      title: " ",
-      subtitle: "ዮሐ.2:1",
-      text: "የኢየሱስም እናት በዚያ ነበረች።",
+      title: "",
+      subtitle: "ዮሐ.2÷1",
+      text: "«...የኢየሱስም እናት በዚያ ነበረች»",
       initials: "ቃል እና ቤተ "
     },
     gallery: {
