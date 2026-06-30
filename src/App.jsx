@@ -346,13 +346,13 @@ function App() {
         <section className="section container" style={{ paddingBottom: '4rem' }}>
           <FadeIn>
             <div className="text-center">
-              <div className="uppercase-mono text-accent">Moments</div>
-              <h2 className="responsive-h2" style={{ display: 'block', margin: '1.5rem 0', color: 'var(--color-primary)' }}>Video Highlights</h2>
+              <div className="uppercase-mono text-accent">{t.video.moments}</div>
+              <h2 className="responsive-h2" style={{ display: 'block', margin: '1.5rem 0', color: 'var(--color-primary)' }}>{t.video.highlights}</h2>
               <SectionDivider />
             </div>
           </FadeIn>
           <FadeIn delay={0.2}>
-            <VideoPlayer src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
+            <VideoPlayer src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" t={t} />
           </FadeIn>
         </section>
 

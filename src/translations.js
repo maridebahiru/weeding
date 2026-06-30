@@ -54,6 +54,11 @@ export const translations = {
       loading: "Loading wishes...",
       noWishes: "No wishes yet. Be the first to write a message!",
       successMsg: "Thank you for your beautiful wish!"
+    },
+    video: {
+      comingSoon: "Coming Soon",
+      moments: "Moments",
+      highlights: "Video Highlights",
     }
   },
   am: {
@@ -111,6 +116,11 @@ export const translations = {
       loading: "መልካም ምኞቶች በመጫን ላይ...",
       noWishes: "እስካሁን ምንም ምኞት አልተጻፈም። የመጀመሪያው ይሁኑ!",
       successMsg: "ስለመልካም ምኞትዎ እናመሰግናለን!"
+    },
+    video: {
+      comingSoon: "በቅርቡ ይጠብቁ",
+      moments: "ትዝታዎቻችን",
+      highlights: "በቪዲዮ",
     }
   }
 };

@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
-import { Play, Pause, Volume2, Volume1, VolumeX } from "lucide-react";
+import { Play, Pause, Volume2, Volume1, VolumeX, Film } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import placeholderImg from "../assets/0A3A7334.jpg";
 
 const formatTime = (seconds) => {
   const minutes = Math.floor(seconds / 60);
@@ -66,7 +67,7 @@ const Button = ({ onClick, children, active }) => (
   </button>
 );
 
-const VideoPlayer = ({ src }) => {
+const VideoPlayer = ({ src, t }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(1);
@@ -136,6 +137,10 @@ const VideoPlayer = ({ src }) => {
     }
   };
 
+  const isComingSoon = true; // Toggle to display Coming Soon overlay
+  const comingSoonText = t?.video?.comingSoon || "Coming Soon";
+  const comingSoonSub = t?.video?.comingSoonSub;
+
   return (
     <motion.div
       style={{
@@ -152,77 +157,184 @@ const VideoPlayer = ({ src }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      onMouseEnter={() => setShowControls(true)}
-      onMouseLeave={() => setShowControls(false)}
+      onMouseEnter={() => !isComingSoon && setShowControls(true)}
+      onMouseLeave={() => !isComingSoon && setShowControls(false)}
     >
       <video
         ref={videoRef}
-        style={{ width: '100%', display: 'block', cursor: 'pointer' }}
+        style={{ 
+          width: '100%', 
+          aspectRatio: '16/9',
+          display: 'block', 
+          cursor: isComingSoon ? 'default' : 'pointer',
+          filter: isComingSoon ? 'blur(3px)' : 'none',
+          objectFit: 'cover'
+        }}
         onTimeUpdate={handleTimeUpdate}
-        src={src}
-        onClick={togglePlay}
+        src={isComingSoon ? undefined : src}
+        poster={placeholderImg}
+        onClick={isComingSoon ? undefined : togglePlay}
         loop
       />
 
-      <AnimatePresence>
-        {showControls && (
+      {isComingSoon && (
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'radial-gradient(circle, rgba(58, 11, 20, 0.75) 0%, rgba(26, 3, 7, 0.9) 100%)',
+            backdropFilter: 'blur(4px)',
+            zIndex: 10,
+            color: 'white',
+            padding: '2rem',
+            textAlign: 'center',
+          }}
+        >
+          {/* Pulsing Film Icon with Gold Glow */}
           <motion.div
-            style={{
-              position: 'absolute',
-              bottom: '0',
-              left: '0',
-              right: '0',
-              maxWidth: '36rem',
-              margin: '0.5rem auto',
-              padding: '1rem',
-              backgroundColor: '#11111198',
-              backdropFilter: 'blur(12px)',
-              borderRadius: '1rem',
-              zIndex: 50,
+            animate={{ 
+              scale: [1, 1.05, 1],
+              boxShadow: [
+                "0 0 20px rgba(212, 175, 55, 0.2)",
+                "0 0 35px rgba(212, 175, 55, 0.5)",
+                "0 0 20px rgba(212, 175, 55, 0.2)"
+              ]
             }}
-            initial={{ y: 20, opacity: 0, filter: "blur(10px)" }}
-            animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-            exit={{ y: 20, opacity: 0, filter: "blur(10px)" }}
-            transition={{ duration: 0.6, ease: "circInOut", type: "spring" }}
+            transition={{ 
+              duration: 3, 
+              repeat: Infinity, 
+              ease: "easeInOut" 
+            }}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '70px',
+              height: '70px',
+              borderRadius: '50%',
+              backgroundColor: 'rgba(58, 11, 20, 0.6)',
+              border: '2px solid var(--color-accent, #D4AF37)',
+              marginBottom: '1.25rem',
+              color: 'var(--color-accent, #D4AF37)'
+            }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-              <span style={{ color: 'white', fontSize: '0.875rem' }}>{formatTime(currentTime)}</span>
-              <CustomSlider value={progress} onChange={handleSeek} style={{ flex: 1 }} />
-              <span style={{ color: 'white', fontSize: '0.875rem' }}>{formatTime(duration)}</span>
-            </div>
+            <Film size={32} strokeWidth={1.5} />
+          </motion.div>
 
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                  <Button onClick={togglePlay}>
-                    {isPlaying ? <Pause size={20} /> : <Play size={20} />}
-                  </Button>
-                </motion.div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+          {/* Coming Soon Title */}
+          <h3
+            style={{
+              fontFamily: 'var(--font-serif)',
+              fontSize: '2rem',
+              letterSpacing: '0.15em',
+              marginBottom: '0.5rem',
+              color: 'var(--color-accent, #D4AF37)',
+              textTransform: 'uppercase',
+              textShadow: '0 2px 4px rgba(0,0,0,0.5)'
+            }}
+          >
+            {comingSoonText}
+          </h3>
+
+          {/* Divider line */}
+          {comingSoonSub && (
+            <div 
+              style={{
+                width: '60px',
+                height: '1px',
+                background: 'linear-gradient(90deg, transparent, var(--color-accent, #D4AF37), transparent)',
+                marginBottom: '1rem'
+              }}
+            />
+          )}
+
+          {/* Subtitle */}
+          {comingSoonSub && (
+            <p
+              style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: '0.95rem',
+                maxWidth: '28rem',
+                lineHeight: '1.6',
+                color: 'rgba(255, 255, 255, 0.85)',
+                fontWeight: 300,
+                textShadow: '0 1px 2px rgba(0,0,0,0.5)'
+              }}
+            >
+              {comingSoonSub}
+            </p>
+          )}
+        </div>
+      )}
+
+      {!isComingSoon && (
+        <AnimatePresence>
+          {showControls && (
+            <motion.div
+              style={{
+                position: 'absolute',
+                bottom: '0',
+                left: '0',
+                right: '0',
+                maxWidth: '36rem',
+                margin: '0.5rem auto',
+                padding: '1rem',
+                backgroundColor: '#11111198',
+                backdropFilter: 'blur(12px)',
+                borderRadius: '1rem',
+                zIndex: 50,
+              }}
+              initial={{ y: 20, opacity: 0, filter: "blur(10px)" }}
+              animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+              exit={{ y: 20, opacity: 0, filter: "blur(10px)" }}
+              transition={{ duration: 0.6, ease: "circInOut", type: "spring" }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                <span style={{ color: 'white', fontSize: '0.875rem' }}>{formatTime(currentTime)}</span>
+                <CustomSlider value={progress} onChange={handleSeek} style={{ flex: 1 }} />
+                <span style={{ color: 'white', fontSize: '0.875rem' }}>{formatTime(duration)}</span>
+              </div>
+
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                   <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                    <Button onClick={toggleMute}>
-                      {isMuted ? <VolumeX size={20} /> : volume > 0.5 ? <Volume2 size={20} /> : <Volume1 size={20} />}
+                    <Button onClick={togglePlay}>
+                      {isPlaying ? <Pause size={20} /> : <Play size={20} />}
                     </Button>
                   </motion.div>
-                  <div style={{ width: '6rem' }}>
-                    <CustomSlider value={volume * 100} onChange={handleVolumeChange} />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                    <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                      <Button onClick={toggleMute}>
+                        {isMuted ? <VolumeX size={20} /> : volume > 0.5 ? <Volume2 size={20} /> : <Volume1 size={20} />}
+                      </Button>
+                    </motion.div>
+                    <div style={{ width: '6rem' }}>
+                      <CustomSlider value={volume * 100} onChange={handleVolumeChange} />
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                {[0.5, 1, 1.5, 2].map((speed) => (
-                  <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} key={speed}>
-                    <Button onClick={() => setSpeed(speed)} active={playbackSpeed === speed}>
-                      {speed}x
-                    </Button>
-                  </motion.div>
-                ))}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  {[0.5, 1, 1.5, 2].map((speed) => (
+                    <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} key={speed}>
+                      <Button onClick={() => setSpeed(speed)} active={playbackSpeed === speed}>
+                        {speed}x
+                      </Button>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      )}
     </motion.div>
   );
 };
