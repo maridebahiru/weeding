@@ -12,6 +12,7 @@ import AdminPage from './components/AdminPage';
 import heroImg from './assets/0A3A7334.jpg';
 import storyImg from './assets/0A3A7352.jpg';
 import sealImg from './assets/wax-seal.png';
+import highlightVideo from './assets/Beteab & Kal Vol 02.mp4';
 
 // Gallery Images
 import gal1 from './assets/0A3A7364.jpg';
@@ -352,7 +353,7 @@ function App() {
             </div>
           </FadeIn>
           <FadeIn delay={0.2}>
-            <VideoPlayer src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" t={t} />
+            <VideoPlayer src={highlightVideo} t={t} />
           </FadeIn>
         </section>
 
@@ -415,7 +416,7 @@ function App() {
                 </div>
                 <div className="map-container">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3923.630040737434!2d41.8596669!3d9.605333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x163fadfe55057b3f%3A0xe54d9093cd0c8ff!2sEthio-Italy%20Pol%20Technic%20College!5e0!3m2!1sen!2set!4v1718179374025!5m2!1sen!2set"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3923.630040737434!2d41.8401874!3d9.6081129!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x163101a2494ffadf%3A0xc3aebdbe9c8b1eba!2sEthio-Italy%20Pol%20Technic%20College!5e0!3m2!1sen!2set!4v1718179374025!5m2!1sen!2set"
                     title="Ethio-Italian Polytechnic College Map"
                     allowFullScreen=""
                     loading="lazy"
@@ -423,7 +424,7 @@ function App() {
                   ></iframe>
                 </div>
                 <a
-                  href="https://www.google.com/maps/search/?api=1&query=Ethio-Italy+Pol+Technic+College,+Dire+Dawa"
+                  href="https://maps.app.goo.gl/UQGVWXqvKoPBxRES8"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-outline"

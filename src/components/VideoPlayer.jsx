@@ -67,7 +67,7 @@ const Button = ({ onClick, children, active }) => (
   </button>
 );
 
-const VideoPlayer = ({ src, t }) => {
+const VideoPlayer = ({ src, t, isComingSoon = false }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(1);
@@ -137,7 +137,6 @@ const VideoPlayer = ({ src, t }) => {
     }
   };
 
-  const isComingSoon = true; // Toggle to display Coming Soon overlay
   const comingSoonText = t?.video?.comingSoon || "Coming Soon";
   const comingSoonSub = t?.video?.comingSoonSub;
 
